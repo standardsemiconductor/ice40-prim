@@ -1,5 +1,7 @@
 module Ice40.Spi
   ( SpiIO
+  , ToSb
+  , FromSb
   , spiLeft
   , spiRight
   ) where
@@ -9,8 +11,7 @@ import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 import Data.Maybe (isJust)
-import Data.Monoid (getFirst)
-import qualified Semi.Ice40.Bus as B
+import Data.Functor ((<&>))
 
 {-# ANN spiPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
@@ -221,21 +222,31 @@ spiPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0     -- dato
                     )
 
-data SpiIO = SpiIO ("biwo" ::: Bit)
-                   ("bowi" ::: Bit)
-                   ("wck"  ::: Bit)
-                   ("cs"   ::: Bit)
+type Byte   = BitVector 8
+type Addr   = Byte
+type Data   = Byte
+type ToSb   = Maybe (Addr, Maybe Data)
+type FromSb = Maybe Data
+
+data SpiIO = SpiIO
+  { biwo :: "biwo" ::: Bit
+  , bowi :: "bowi" ::: Bit
+  , wck  :: "wck"  ::: Bit
+  , cs   :: "cs"   ::: Bit
+  }
+  deriving stock (Generic, Show, Eq)
+  deriving anyclass NFDataX
 
 spi
   :: HiddenClockResetEnable dom
   => String                           -- busAddr
-  -> Signal dom B.ToSb
-  -> Unbundled dom (SpiIO, B.FromSb)
+  -> Signal dom ToSb
+  -> Unbundled dom (SpiIO, FromSb)
 spi busAddr sbS
   = let (biwo', bowi', sck', cs', ack', dato') = spiPrim busAddr
                                                          hasClock
-                                                         (rw <$> sbS)
-                                                         (isJust.getFirst <$> sbS)
+                                                         rw
+                                                         stb
                                                          (bitAt 7 <$> sbadr)
                                                          (bitAt 6 <$> sbadr)
                                                          (bitAt 5 <$> sbadr)
@@ -256,27 +267,30 @@ spi busAddr sbS
                   <*> bowi'
                   <*> sck'
                   <*> cs'
-        , bundle (ack', unpack <$> dato')
+        , fromSb <$> ack' <*> dato'
         )
   where
-    rw = maybe False (isJust.snd) . getFirst
-    f = \case
-      Nothing -> (0, 0)
-      Just (a, Nothing) -> (pack a, 0)
-      Just (a, Just d)  -> (pack a, pack d)
-    (sbadr, sbdat) = unbundle $ f . getFirst <$> sbS
+    fromSb ack' dato' = if ack'
+      then Just dato'
+      else Nothing
+    rw = maybe False (isJust.snd) <$> sbS
+    stb = isJust <$> sbS
+    (sbadr, sbdat) = unbundle $ sbS <&> \case
+      Nothing           -> (0, 0)
+      Just (a, Nothing) -> (a, 0)
+      Just (a, Just d)  -> (a, d)
 
-bitAt :: Index 8 -> BitVector 8 -> Bit
+bitAt :: Index 8 -> Byte -> Bit
 bitAt n = (!n)
 
 spiLeft
   :: HiddenClockResetEnable dom
-  => Signal dom B.ToSb                
-  -> Unbundled dom (SpiIO, B.FromSb)
+  => Signal dom ToSb
+  -> Unbundled dom (SpiIO, FromSb)
 spiLeft = spi "0b0000"
 
 spiRight
   :: HiddenClockResetEnable dom
-  => Signal dom B.ToSb                
-  -> Unbundled dom (SpiIO, B.FromSb)
+  => Signal dom ToSb                
+  -> Unbundled dom (SpiIO, FromSb)
 spiRight = spi "0b0010"

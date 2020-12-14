@@ -10,7 +10,7 @@ import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 import Data.Maybe (isJust, fromMaybe)
 import Data.Function ((&))
-import qualified Semi.Ice40.Rgb as R
+import qualified Ice40.Rgb as R
 
 {-# ANN ledPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :

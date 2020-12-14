@@ -11,7 +11,7 @@ import Clash.Signal.Internal
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
-import Semi.Ice40.Clock
+import Ice40.Clock
 
 ------------------------------
 -- Low Frequency Oscillator --
