@@ -20,17 +20,19 @@ library
                          Ice40.Osc,
                          Ice40.Ram,
                          Ice40.Rgb,
-                         Ice40.Spi
+                         Ice40.Spi,
+                         Ice40.I2c
         hs-source-dirs: src
         build-depends: base >=4.14 && <4.15,
                        Cabal,
                        interpolate,
-                       clash-prelude >=1.2.2 && <1.4,
+                       clash-prelude >=1.2.5 && <1.4,
                        ghc-typelits-natnormalise,
                        ghc-typelits-extra,
                        ghc-typelits-knownnat
         ghc-options:
           -Wall -Wcompat
+          -haddock
 
           -- Plugins to support type-level constraint solving on naturals
           -fplugin GHC.TypeLits.Extra.Solver
