@@ -49,81 +49,85 @@ import Data.Functor ((<&>))
          )"
         , "template" :
   "//SB_SPI begin
-  wire       ~GENSYM[sbdato7][7];
-  wire       ~GENSYM[sbdato6][6];
-  wire       ~GENSYM[sbdato5][5];
-  wire       ~GENSYM[sbdato4][4];
-  wire       ~GENSYM[sbdato3][3];
-  wire       ~GENSYM[sbdato2][2];
-  wire       ~GENSYM[sbdato1][1];
-  wire       ~GENSYM[sbdato0][0];
-  wire       ~GENSYM[sbacko][8];
-  wire       ~GENSYM[mi][9];
-  wire       ~GENSYM[si][10];
-  wire       ~GENSYM[so][11];
-  wire       ~GENSYM[soe][12];
-  wire       ~GENSYM[mcsno3][13];
-  wire       ~GENSYM[mcsnoe3][14];
-  wire       ~GENSYM[mo][15];
-  wire       ~GENSYM[moe][16];
-  wire       ~GENSYM[scki][17];
-  wire       ~GENSYM[scko][18];
-  wire       ~GENSYM[sckoe][19];
-  wire       ~GENSYM[miso][20];
-  wire       ~GENSYM[mosi][21];
-  wire       ~GENSYM[sck][22];
-  wire       ~GENSYM[cs][23];
-  wire       ~GENSYM[scsni][24];
+  wire ~GENSYM[mi][10];
+  wire ~GENSYM[si][10];
+  wire ~GENSYM[scki][17];
+  wire ~GENSYM[scsni][24];
+  wire ~GENSYM[sbdato7][1];
+  wire ~GENSYM[sbdato6][2];
+  wire ~GENSYM[sbdato5][3];
+  wire ~GENSYM[sbdato4][4];
+  wire ~GENSYM[sbdato3][5];
+  wire ~GENSYM[sbdato2][6];
+  wire ~GENSYM[sbdato1][7];
+  wire ~GENSYM[sbdato0][8];
+  wire ~GENSYM[sbacko][9];
+  wire ~GENSYM[irq][??]  
+  wire ~GENSYM[so][11];
+  wire ~GENSYM[soe][12];
+  wire ~GENSYM[mcsno3][13];
+  wire ~GENSYM[mcsnoe3][14];
+  wire ~GENSYM[mo][15];
+  wire ~GENSYM[moe][16];
+  wire ~GENSYM[scko][18];
+  wire ~GENSYM[sckoe][19];
+  wire ~GENSYM[miso][20];
+  wire ~GENSYM[mosi][21];
+  wire ~GENSYM[sck][22];
+  wire ~GENSYM[cs][23];
 
-  SB_SPI #(.BUS_ADDR74(~ARG[0])) ~GENSYM[sb_spi_inst][25] (
+  SB_SPI #(
+    .BUS_ADDR74(~ARG[0])
+  ) ~GENSYM[sb_spi_inst][0] (
     .SBCLKI(~ARG[1]),
-    .SBRWI(~ARG[2]),
-    .SBSTBI(~ARG[3]),
-    .SBADRI7(~ARG[4]),
-    .SBADRI6(~ARG[5]),
-    .SBADRI5(~ARG[6]),
-    .SBADRI4(~ARG[7]),
-    .SBADRI3(~ARG[8]),
-    .SBADRI2(~ARG[9]),
-    .SBADRI1(~ARG[10]),
-    .SBADRI0(~ARG[11]),
-    .SBDATI7(~ARG[12]),
-    .SBDATI6(~ARG[13]),
-    .SBDATI5(~ARG[14]),
-    .SBDATI4(~ARG[15]),
-    .SBDATI3(~ARG[16]),
-    .SBDATI2(~ARG[17]),
-    .SBDATI1(~ARG[18]),
-    .SBDATI0(~ARG[19]),
-    .MI(~SYM[9]),
-    .SI(~SYM[10]),
-    .SCKI(~SYM[17]),
-    .SCSNI(1'b1), // 1'b1 ~SYM[24] NEEDS PULLUP
-    .SBDATO7(~SYM[7]),
-    .SBDATO6(~SYM[6]),
-    .SBDATO5(~SYM[5]),
-    .SBDATO4(~SYM[4]),
-    .SBDATO3(~SYM[3]),
-    .SBDATO2(~SYM[2]),
-    .SBDATO1(~SYM[1]),
-    .SBDATO0(~SYM[0]),
-    .SBACKO(~SYM[8]),
-    .SPIIRQ(),
-    .SPIWKUP(),
-    .SO(~SYM[11]),
-    .SOE(~SYM[12]),
-    .MO(~SYM[15]),
-    .MOE(~SYM[16]),
-    .SCKO(~SYM[18]),
-    .SCKOE(~SYM[19]),
-    .MCSNO3(~SYM[13]),
-    .MCSNO2(),
-    .MCSNO1(),
-    .MCSNO0(),
-    .MCSNOE3(~SYM[14]),
-    .MCSNOE2(),
-    .MCSNOE1(),
-    .MCSNOE0()
+    .SBRWI   (~ARG[2]),
+    .SBSTBI  (~ARG[3]),
+    .SBADRI7 (~ARG[4]),
+    .SBADRI6 (~ARG[5]),
+    .SBADRI5 (~ARG[6]),
+    .SBADRI4 (~ARG[7]),
+    .SBADRI3 (~ARG[8]),
+    .SBADRI2 (~ARG[9]),
+    .SBADRI1 (~ARG[10]),
+    .SBADRI0 (~ARG[11]),
+    .SBDATI7 (~ARG[12]),
+    .SBDATI6 (~ARG[13]),
+    .SBDATI5 (~ARG[14]),
+    .SBDATI4 (~ARG[15]),
+    .SBDATI3 (~ARG[16]),
+    .SBDATI2 (~ARG[17]),
+    .SBDATI1 (~ARG[18]),
+    .SBDATI0 (~ARG[19]),
+
+    .MI      (~SYM[1]),
+    .SI      (~SYM[2]),
+    .SCKI    (~SYM[3]),
+    .SCSNI   (~SYM[4]), // 1'b1 ~SYM[24] NEEDS PULLUP
+    .SBDATO7 (~SYM[5]),
+    .SBDATO6 (~SYM[6]),
+    .SBDATO5 (~SYM[7]),
+    .SBDATO4 (~SYM[8]),
+    .SBDATO3 (~SYM[9]),
+    .SBDATO2 (~SYM[10]),
+    .SBDATO1 (~SYM[11]),
+    .SBDATO0 (~SYM[12]),
+    .SBACKO  (~SYM[13]),
+    .SPIIRQ  (~SYM[14]),
+    .SPIWKUP (~SYM[15]),
+    .SO      (~SYM[16]),
+    .SOE     (~SYM[17]),
+    .MO      (~SYM[18]),
+    .MOE     (~SYM[19]),
+    .SCKO    (~SYM[20]),
+    .SCKOE   (~SYM[21]),
+    .MCSNO3  (~SYM[22]),
+    .MCSNO2  (~SYM[23]),
+    .MCSNO1  (~SYM[24]),
+    .MCSNO0  (~SYM[25]),
+    .MCSNOE3 (~SYM[26]),
+    .MCSNOE2 (~SYM[27]),
+    .MCSNOE1 (~SYM[28]),
+    .MCSNOE0 (~SYM[29])
   );
 
   SB_IO #(
