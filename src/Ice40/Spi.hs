@@ -15,7 +15,7 @@ import Data.Functor ((<&>))
 
 {-# ANN spiPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Semi.Ice40.Spi.spiPrim"
+       { "name" : "Ice40.Spi.spiPrim"
        , "kind" : "Declaration"
        , "type" :
   "sbSpiPrim
@@ -49,32 +49,35 @@ import Data.Functor ((<&>))
          )"
         , "template" :
   "//SB_SPI begin
-  wire ~GENSYM[mi][10];
-  wire ~GENSYM[si][10];
-  wire ~GENSYM[scki][17];
-  wire ~GENSYM[scsni][24];
-  wire ~GENSYM[sbdato7][1];
-  wire ~GENSYM[sbdato6][2];
-  wire ~GENSYM[sbdato5][3];
-  wire ~GENSYM[sbdato4][4];
-  wire ~GENSYM[sbdato3][5];
-  wire ~GENSYM[sbdato2][6];
-  wire ~GENSYM[sbdato1][7];
-  wire ~GENSYM[sbdato0][8];
-  wire ~GENSYM[sbacko][9];
-  wire ~GENSYM[irq][??]  
-  wire ~GENSYM[so][11];
-  wire ~GENSYM[soe][12];
-  wire ~GENSYM[mcsno3][13];
-  wire ~GENSYM[mcsnoe3][14];
-  wire ~GENSYM[mo][15];
-  wire ~GENSYM[moe][16];
-  wire ~GENSYM[scko][18];
-  wire ~GENSYM[sckoe][19];
-  wire ~GENSYM[miso][20];
-  wire ~GENSYM[mosi][21];
-  wire ~GENSYM[sck][22];
-  wire ~GENSYM[cs][23];
+  wire ~GENSYM[mi][0];
+  wire ~GENSYM[si][1];
+  wire ~GENSYM[scki][2];
+  wire ~GENSYM[scsni][3];
+  wire ~GENSYM[sbdato7][4];
+  wire ~GENSYM[sbdato6][5];
+  wire ~GENSYM[sbdato5][6];
+  wire ~GENSYM[sbdato4][7];
+  wire ~GENSYM[sbdato3][8];
+  wire ~GENSYM[sbdato2][9];
+  wire ~GENSYM[sbdato1][10];
+  wire ~GENSYM[sbdato0][11];
+  wire ~GENSYM[sbacko][12];
+  wire ~GENSYM[irq][13];
+  wire ~GENSYM[wkup][14];
+  wire ~GENSYM[so][15];
+  wire ~GENSYM[soe][16];
+  wire ~GENSYM[mo][17];
+  wire ~GENSYM[moe][18];
+  wire ~GENSYM[scko][19];
+  wire ~GENSYM[sckoe][20];
+  wire ~GENSYM[mcsno3][21];
+  wire ~GENSYM[mcsno2][22];
+  wire ~GENSYM[mcsno1][23];
+  wire ~GENSYM[mcsno0][24];
+  wire ~GENSYM[mcsnoe3][25];
+  wire ~GENSYM[mcsnoe2][26];
+  wire ~GENSYM[mcsnoe1][27];
+  wire ~GENSYM[mcsnoe0][28];
 
   SB_SPI #(
     .BUS_ADDR74(~ARG[0])
@@ -128,43 +131,6 @@ import Data.Functor ((<&>))
     .MCSNOE2 (~SYM[27]),
     .MCSNOE1 (~SYM[28]),
     .MCSNOE0 (~SYM[29])
-  );
-
-  SB_IO #(
-    .PIN_TYPE(6'b101001),
-    .PULLUP(1'b1)
-  ) ~GENSYM[miso_io][26] (
-    .PACKAGE_PIN(~SYM[20]),   // miso
-    .OUTPUT_ENABLE(~SYM[12]), // soe
-    .D_OUT_0(~SYM[11]),       // so
-    .D_IN_0(~SYM[9])          // mi
-  );
-
-  SB_IO #(.PIN_TYPE(6'b101001)) ~GENSYM[mosi_io][27] (
-    .PACKAGE_PIN(~SYM[21]),   // mosi
-    .OUTPUT_ENABLE(~SYM[16]), // moe
-    .D_OUT_0(~SYM[15]),       // mo
-    .D_IN_0(~SYM[10])         // si
-  );
-
-  SB_IO #(
-    .PIN_TYPE(6'b101001), 
-    .PULLUP(1'b1)
-  ) ~GENSYM[sck_io][28] (
-    .PACKAGE_PIN(~SYM[22]),   // sck
-    .OUTPUT_ENABLE(~SYM[19]), // sckoe
-    .D_OUT_0(~SYM[18]),       // scko
-    .D_IN_0(~SYM[17])         // scki
-  );
-
-  SB_IO #(
-    .PIN_TYPE(6'b101001),
-    .PULLUP(1'b1)
-  ) ~GENSYM[cs_io][29] (
-    .PACKAGE_PIN(~SYM[23]),   // cs
-    .OUTPUT_ENABLE(~SYM[14]), // mscnoe3
-    .D_OUT_0(~SYM[13]),       // mscno3
-    .D_IN_0(~SYM[24])         // scsni unused
   );
 
   assign ~RESULT = { ~SYM[20] // miso
