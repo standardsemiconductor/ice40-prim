@@ -80,63 +80,60 @@ import Data.Functor ((<&>))
   wire ~GENSYM[mcsnoe0][28];
 
   SB_SPI #(
-    .BUS_ADDR74(~ARG[0])
-  ) ~GENSYM[sb_spi_inst][0] (
+    .BUS_ADDR74( ~ARG[0] )
+  ) ~GENSYM[sb_spi_inst][29] (
     .SBCLKI(~ARG[1]),
-    .SBRWI   (~ARG[2]),
-    .SBSTBI  (~ARG[3]),
-    .SBADRI7 (~ARG[4]),
-    .SBADRI6 (~ARG[5]),
-    .SBADRI5 (~ARG[6]),
-    .SBADRI4 (~ARG[7]),
-    .SBADRI3 (~ARG[8]),
-    .SBADRI2 (~ARG[9]),
-    .SBADRI1 (~ARG[10]),
-    .SBADRI0 (~ARG[11]),
-    .SBDATI7 (~ARG[12]),
-    .SBDATI6 (~ARG[13]),
-    .SBDATI5 (~ARG[14]),
-    .SBDATI4 (~ARG[15]),
-    .SBDATI3 (~ARG[16]),
-    .SBDATI2 (~ARG[17]),
-    .SBDATI1 (~ARG[18]),
-    .SBDATI0 (~ARG[19]),
+    .SBRWI   ( ~ARG[2]  ),
+    .SBSTBI  ( ~ARG[3]  ),
+    .SBADRI7 ( ~ARG[4]  ),
+    .SBADRI6 ( ~ARG[5]  ),
+    .SBADRI5 ( ~ARG[6]  ),
+    .SBADRI4 ( ~ARG[7]  ),
+    .SBADRI3 ( ~ARG[8]  ),
+    .SBADRI2 ( ~ARG[9]  ),
+    .SBADRI1 ( ~ARG[10] ),
+    .SBADRI0 ( ~ARG[11] ),
+    .SBDATI7 ( ~ARG[12] ),
+    .SBDATI6 ( ~ARG[13] ),
+    .SBDATI5 ( ~ARG[14] ),
+    .SBDATI4 ( ~ARG[15] ),
+    .SBDATI3 ( ~ARG[16] ),
+    .SBDATI2 ( ~ARG[17] ),
+    .SBDATI1 ( ~ARG[18] ),
+    .SBDATI0 ( ~ARG[19] ),
 
-    .MI      (~SYM[1]),
-    .SI      (~SYM[2]),
-    .SCKI    (~SYM[3]),
-    .SCSNI   (~SYM[4]), // 1'b1 ~SYM[24] NEEDS PULLUP
-    .SBDATO7 (~SYM[5]),
-    .SBDATO6 (~SYM[6]),
-    .SBDATO5 (~SYM[7]),
-    .SBDATO4 (~SYM[8]),
-    .SBDATO3 (~SYM[9]),
-    .SBDATO2 (~SYM[10]),
-    .SBDATO1 (~SYM[11]),
-    .SBDATO0 (~SYM[12]),
-    .SBACKO  (~SYM[13]),
-    .SPIIRQ  (~SYM[14]),
-    .SPIWKUP (~SYM[15]),
-    .SO      (~SYM[16]),
-    .SOE     (~SYM[17]),
-    .MO      (~SYM[18]),
-    .MOE     (~SYM[19]),
-    .SCKO    (~SYM[20]),
-    .SCKOE   (~SYM[21]),
-    .MCSNO3  (~SYM[22]),
-    .MCSNO2  (~SYM[23]),
-    .MCSNO1  (~SYM[24]),
-    .MCSNO0  (~SYM[25]),
-    .MCSNOE3 (~SYM[26]),
-    .MCSNOE2 (~SYM[27]),
-    .MCSNOE1 (~SYM[28]),
-    .MCSNOE0 (~SYM[29])
+    .MI      ( ~SYM[0]  ),
+    .SI      ( ~SYM[1]  ),
+    .SCKI    ( ~SYM[2]  ),
+    .SCSNI   ( ~SYM[3]  ),
+    .SBDATO7 ( ~SYM[4]  ),
+    .SBDATO6 ( ~SYM[5]  ),
+    .SBDATO5 ( ~SYM[6]  ),
+    .SBDATO4 ( ~SYM[7]  ),
+    .SBDATO3 ( ~SYM[8]  ),
+    .SBDATO2 ( ~SYM[9]  ),
+    .SBDATO1 ( ~SYM[10] ),
+    .SBDATO0 ( ~SYM[11] ),
+    .SBACKO  ( ~SYM[12] ),
+    .SPIIRQ  ( ~SYM[13] ),
+    .SPIWKUP ( ~SYM[14] ),
+    .SO      ( ~SYM[15] ),
+    .SOE     ( ~SYM[16] ),
+    .MO      ( ~SYM[17] ),
+    .MOE     ( ~SYM[18] ),
+    .SCKO    ( ~SYM[19] ),
+    .SCKOE   ( ~SYM[20] ),
+    .MCSNO3  ( ~SYM[21] ),
+    .MCSNO2  ( ~SYM[22] ),
+    .MCSNO1  ( ~SYM[23] ),
+    .MCSNO0  ( ~SYM[24] ),
+    .MCSNOE3 ( ~SYM[25] ),
+    .MCSNOE2 ( ~SYM[26] ),
+    .MCSNOE1 ( ~SYM[27] ),
+    .MCSNOE0 ( ~SYM[28] )
   );
 
-  assign ~RESULT = { ~SYM[20] // miso
-                   , ~SYM[21] // mosi
-                   , ~SYM[22] // sck
-                   , ~SYM[23] // #cs
+  assign ~RESULT = { 
                    , ~SYM[8]  // sbacko
                    , ~SYM[7]  // sbdato7
                    , ~SYM[6]  // sbdato6
