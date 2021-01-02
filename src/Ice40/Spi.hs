@@ -39,6 +39,10 @@ import Data.Functor ((<&>))
     -> Signal dom Bit  -- ARG[17] sbdati2
     -> Signal dom Bit  -- ARG[18] sbdati1
     -> Signal dom Bit  -- ARG[19] sbdati0
+    -> Signal dom Bit  -- ARG[20] mi
+    -> Signal dom Bit  -- ARG[21] si
+    -> Signal dom Bit  -- ARG[22] scki
+    -> Signal dom Bit  -- ARG[23] scsni
     -> Unbundled dom 
          ( Bit         -- miso
          , Bit         -- mosi
@@ -49,40 +53,36 @@ import Data.Functor ((<&>))
          )"
         , "template" :
   "//SB_SPI begin
-  wire ~GENSYM[mi][0];
-  wire ~GENSYM[si][1];
-  wire ~GENSYM[scki][2];
-  wire ~GENSYM[scsni][3];
-  wire ~GENSYM[sbdato7][4];
-  wire ~GENSYM[sbdato6][5];
-  wire ~GENSYM[sbdato5][6];
-  wire ~GENSYM[sbdato4][7];
-  wire ~GENSYM[sbdato3][8];
-  wire ~GENSYM[sbdato2][9];
-  wire ~GENSYM[sbdato1][10];
-  wire ~GENSYM[sbdato0][11];
-  wire ~GENSYM[sbacko][12];
-  wire ~GENSYM[irq][13];
-  wire ~GENSYM[wkup][14];
-  wire ~GENSYM[so][15];
-  wire ~GENSYM[soe][16];
-  wire ~GENSYM[mo][17];
-  wire ~GENSYM[moe][18];
-  wire ~GENSYM[scko][19];
-  wire ~GENSYM[sckoe][20];
-  wire ~GENSYM[mcsno3][21];
-  wire ~GENSYM[mcsno2][22];
-  wire ~GENSYM[mcsno1][23];
-  wire ~GENSYM[mcsno0][24];
-  wire ~GENSYM[mcsnoe3][25];
-  wire ~GENSYM[mcsnoe2][26];
-  wire ~GENSYM[mcsnoe1][27];
-  wire ~GENSYM[mcsnoe0][28];
+  wire ~GENSYM[sbdato7][0];
+  wire ~GENSYM[sbdato6][1];
+  wire ~GENSYM[sbdato5][2];
+  wire ~GENSYM[sbdato4][3];
+  wire ~GENSYM[sbdato3][4];
+  wire ~GENSYM[sbdato2][5];
+  wire ~GENSYM[sbdato1][6];
+  wire ~GENSYM[sbdato0][7];
+  wire ~GENSYM[sbacko][8];
+  wire ~GENSYM[irq][9];
+  wire ~GENSYM[wkup][10];
+  wire ~GENSYM[so][11];
+  wire ~GENSYM[soe][12];
+  wire ~GENSYM[mo][13];
+  wire ~GENSYM[moe][14];
+  wire ~GENSYM[scko][15];
+  wire ~GENSYM[sckoe][16];
+  wire ~GENSYM[mcsno3][17];
+  wire ~GENSYM[mcsno2][18];
+  wire ~GENSYM[mcsno1][19];
+  wire ~GENSYM[mcsno0][20];
+  wire ~GENSYM[mcsnoe3][21];
+  wire ~GENSYM[mcsnoe2][22];
+  wire ~GENSYM[mcsnoe1][23];
+  wire ~GENSYM[mcsnoe0][24];
 
   SB_SPI #(
     .BUS_ADDR74( ~ARG[0] )
-  ) ~GENSYM[sb_spi_inst][29] (
-    .SBCLKI(~ARG[1]),
+  ) ~GENSYM[sb_spi_inst][25] (
+    .SBCLKI  ( ~ARG[1]  ),
     .SBRWI   ( ~ARG[2]  ),
     .SBSTBI  ( ~ARG[3]  ),
     .SBADRI7 ( ~ARG[4]  ),
@@ -101,36 +101,36 @@ import Data.Functor ((<&>))
     .SBDATI2 ( ~ARG[17] ),
     .SBDATI1 ( ~ARG[18] ),
     .SBDATI0 ( ~ARG[19] ),
+    .MI      ( ~ARG[20] ),
+    .SI      ( ~ARG[21] ),
+    .SCKI    ( ~ARG[22] ),
+    .SCSNI   ( ~ARG[23] ),
 
-    .MI      ( ~SYM[0]  ),
-    .SI      ( ~SYM[1]  ),
-    .SCKI    ( ~SYM[2]  ),
-    .SCSNI   ( ~SYM[3]  ),
-    .SBDATO7 ( ~SYM[4]  ),
-    .SBDATO6 ( ~SYM[5]  ),
-    .SBDATO5 ( ~SYM[6]  ),
-    .SBDATO4 ( ~SYM[7]  ),
-    .SBDATO3 ( ~SYM[8]  ),
-    .SBDATO2 ( ~SYM[9]  ),
-    .SBDATO1 ( ~SYM[10] ),
-    .SBDATO0 ( ~SYM[11] ),
-    .SBACKO  ( ~SYM[12] ),
-    .SPIIRQ  ( ~SYM[13] ),
-    .SPIWKUP ( ~SYM[14] ),
-    .SO      ( ~SYM[15] ),
-    .SOE     ( ~SYM[16] ),
-    .MO      ( ~SYM[17] ),
-    .MOE     ( ~SYM[18] ),
-    .SCKO    ( ~SYM[19] ),
-    .SCKOE   ( ~SYM[20] ),
-    .MCSNO3  ( ~SYM[21] ),
-    .MCSNO2  ( ~SYM[22] ),
-    .MCSNO1  ( ~SYM[23] ),
-    .MCSNO0  ( ~SYM[24] ),
-    .MCSNOE3 ( ~SYM[25] ),
-    .MCSNOE2 ( ~SYM[26] ),
-    .MCSNOE1 ( ~SYM[27] ),
-    .MCSNOE0 ( ~SYM[28] )
+    .SBDATO7 ( ~SYM[0]  ),
+    .SBDATO6 ( ~SYM[1]  ),
+    .SBDATO5 ( ~SYM[2]  ),
+    .SBDATO4 ( ~SYM[3]  ),
+    .SBDATO3 ( ~SYM[4]  ),
+    .SBDATO2 ( ~SYM[5]  ),
+    .SBDATO1 ( ~SYM[6] ),
+    .SBDATO0 ( ~SYM[7] ),
+    .SBACKO  ( ~SYM[8] ),
+    .SPIIRQ  ( ~SYM[9] ),
+    .SPIWKUP ( ~SYM[10] ),
+    .SO      ( ~SYM[11] ),
+    .SOE     ( ~SYM[12] ),
+    .MO      ( ~SYM[13] ),
+    .MOE     ( ~SYM[14] ),
+    .SCKO    ( ~SYM[15] ),
+    .SCKOE   ( ~SYM[16] ),
+    .MCSNO3  ( ~SYM[17] ),
+    .MCSNO2  ( ~SYM[18] ),
+    .MCSNO1  ( ~SYM[19] ),
+    .MCSNO0  ( ~SYM[20] ),
+    .MCSNOE3 ( ~SYM[21] ),
+    .MCSNOE2 ( ~SYM[22] ),
+    .MCSNOE1 ( ~SYM[23] ),
+    .MCSNOE0 ( ~SYM[24] )
   );
 
   assign ~RESULT = { 
