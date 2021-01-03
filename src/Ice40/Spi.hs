@@ -31,23 +31,23 @@ import Data.String.Interpolate.Util (unindent)
     -> Signal dom Bit  -- ARG[17] sbdati2
     -> Signal dom Bit  -- ARG[18] sbdati1
     -> Signal dom Bit  -- ARG[19] sbdati0
-    -> Signal dom Bit  -- ARG[20] mi
-    -> Signal dom Bit  -- ARG[21] si
-    -> Signal dom Bit  -- ARG[22] scki
-    -> Signal dom Bit  -- ARG[23] scsni
+    -> Signal dom Bit  -- ARG[20] bi
+    -> Signal dom Bit  -- ARG[21] wi
+    -> Signal dom Bit  -- ARG[22] wcki
+    -> Signal dom Bit  -- ARG[23] wcsni
     -> Unbundled dom 
          ( BitVector 8 -- sbdato
          , Bool        -- sbacko
          , Bit         -- spiirq
          , Bit         -- spiwkup
-         , Bit         -- so
-         , Bit         -- soe
-         , Bit         -- mo
-         , Bit         -- moe
-         , Bit         -- scko
-         , Bit         -- sckoe
-         , BitVector 4 -- mcsno
-         , BitVector 4 -- mcsnoe
+         , Bit         -- wo
+         , Bit         -- woe
+         , Bit         -- bo
+         , Bit         -- boe
+         , Bit         -- wcko
+         , Bit         -- wckoe
+         , BitVector 4 -- bcsno
+         , BitVector 4 -- bcsnoe
          )"
         , "template" :
   "//SB_SPI begin
@@ -62,20 +62,20 @@ import Data.String.Interpolate.Util (unindent)
   wire ~GENSYM[sbacko][8];
   wire ~GENSYM[irq][9];
   wire ~GENSYM[wkup][10];
-  wire ~GENSYM[so][11];
-  wire ~GENSYM[soe][12];
-  wire ~GENSYM[mo][13];
-  wire ~GENSYM[moe][14];
-  wire ~GENSYM[scko][15];
-  wire ~GENSYM[sckoe][16];
-  wire ~GENSYM[mcsno3][17];
-  wire ~GENSYM[mcsno2][18];
-  wire ~GENSYM[mcsno1][19];
-  wire ~GENSYM[mcsno0][20];
-  wire ~GENSYM[mcsnoe3][21];
-  wire ~GENSYM[mcsnoe2][22];
-  wire ~GENSYM[mcsnoe1][23];
-  wire ~GENSYM[mcsnoe0][24];
+  wire ~GENSYM[wo][11];
+  wire ~GENSYM[woe][12];
+  wire ~GENSYM[bo][13];
+  wire ~GENSYM[boe][14];
+  wire ~GENSYM[wcko][15];
+  wire ~GENSYM[wckoe][16];
+  wire ~GENSYM[bcsno3][17];
+  wire ~GENSYM[bcsno2][18];
+  wire ~GENSYM[bcsno1][19];
+  wire ~GENSYM[bcsno0][20];
+  wire ~GENSYM[bcsnoe3][21];
+  wire ~GENSYM[bcsnoe2][22];
+  wire ~GENSYM[bcsnoe1][23];
+  wire ~GENSYM[bcsnoe0][24];
 
   SB_SPI #(
     .BUS_ADDR74( ~ARG[0] )
@@ -142,20 +142,20 @@ import Data.String.Interpolate.Util (unindent)
                    , ~SYM[8]  // sbacko
                    , ~SYM[9]  // spiirq
                    , ~SYM[10] // spiwkup
-                   , ~SYM[11] // so
-                   , ~SYM[12] // soe
-                   , ~SYM[13] // mo
-                   , ~SYM[14] // moe
-                   , ~SYM[15] // scko
-                   , ~SYM[16] // sckoe
-                   , ~SYM[17] // mcsno3
-                   , ~SYM[18] // mcsno2
-                   , ~SYM[19] // mcsno1
-                   , ~SYM[20] // mcsno0
-                   , ~SYM[21] // mcsnoe3
-                   , ~SYM[22] // mcsnoe2
-                   , ~SYM[23] // mcsnoe1
-                   , ~SYM[24] // mcsnoe0
+                   , ~SYM[11] // wo
+                   , ~SYM[12] // woe
+                   , ~SYM[13] // bo
+                   , ~SYM[14] // boe
+                   , ~SYM[15] // wcko
+                   , ~SYM[16] // wckoe
+                   , ~SYM[17] // bcsno3
+                   , ~SYM[18] // bcsno2
+                   , ~SYM[19] // bcsno1
+                   , ~SYM[20] // bcsno0
+                   , ~SYM[21] // bcsnoe3
+                   , ~SYM[22] // bcsnoe2
+                   , ~SYM[23] // bcsnoe1
+                   , ~SYM[24] // bcsnoe0
                    };
   // SB_SPI end"
        }
@@ -185,37 +185,37 @@ spiPrim
   -> Signal dom Bit  -- ARG[17] sbdati2
   -> Signal dom Bit  -- ARG[18] sbdati1
   -> Signal dom Bit  -- ARG[19] sbdati0
-  -> Signal dom Bit  -- ARG[20] mi
-  -> Signal dom Bit  -- ARG[21] si
-  -> Signal dom Bit  -- ARG[22] scki
-  -> Signal dom Bit  -- ARG[23] scsni
+  -> Signal dom Bit  -- ARG[20] bi
+  -> Signal dom Bit  -- ARG[21] wi
+  -> Signal dom Bit  -- ARG[22] wcki
+  -> Signal dom Bit  -- ARG[23] wcsni
   -> Unbundled dom 
        ( BitVector 8 -- sbdato
        , Bool        -- sbacko
        , Bit         -- spiirq
        , Bit         -- spiwkup
-       , Bit         -- so
-       , Bit         -- soe
-       , Bit         -- mo
-       , Bit         -- moe
-       , Bit         -- scko
-       , Bit         -- sckoe
-       , BitVector 4 -- mcsno
-       , BitVector 4 -- mcsnoe
+       , Bit         -- wo
+       , Bit         -- woe
+       , Bit         -- bo
+       , Bit         -- boe
+       , Bit         -- wcko
+       , Bit         -- wckoe
+       , BitVector 4 -- bcsno
+       , BitVector 4 -- bcsnoe
        )
 spiPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
   = unbundle $ pure ( 0     -- sbdato
                     , False -- sbacko
                     , 0     -- spiirq
                     , 0     -- spiwkup
-                    , 0     -- so
-                    , 0     -- soe
-                    , 0     -- mo
-                    , 0     -- moe
-                    , 0     -- scko
-                    , 0     -- sckoe
-                    , 0     -- mcsno
-                    , 0     -- mcsnoe
+                    , 0     -- wo
+                    , 0     -- woe
+                    , 0     -- bo
+                    , 0     -- boe
+                    , 0     -- wcko
+                    , 0     -- wckoe
+                    , 0     -- bcsno
+                    , 0     -- bcsnoe
                     )
 
 
