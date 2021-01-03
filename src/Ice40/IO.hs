@@ -12,8 +12,8 @@ import Data.String.Interpolate.Util (unindent)
        , "type" :
   "ioPrim
     :: BitVector 6    -- ARG[0]  pinType
-    -> String         -- ARG[1]  pullup
-    -> String         -- ARG[2]  negTrigger
+    -> Bit            -- ARG[1]  pullup
+    -> Bit            -- ARG[2]  negTrigger
     -> String         -- ARG[3]  ioStandard
     -> Signal dom Bit -- ARG[4]  latchInputValue
     -> Signal dom Bit -- ARG[5]  clockEnable
@@ -61,8 +61,8 @@ import Data.String.Interpolate.Util (unindent)
 {-# NOINLINE ioPrim #-}
 ioPrim
   :: BitVector 6    -- ARG[0]  pinType
-  -> String         -- ARG[1]  pullup
-  -> String         -- ARG[2]  negTrigger
+  -> Bit            -- ARG[1]  pullup
+  -> Bit            -- ARG[2]  negTrigger
   -> String         -- ARG[3]  ioStandard
   -> Signal dom Bit -- ARG[4]  latchInputValue
   -> Signal dom Bit -- ARG[5]  clockEnable
