@@ -11,16 +11,16 @@ import Data.String.Interpolate.Util (unindent)
        , "kind" : "Declaration"
        , "type" :
   "ioPrim
-    :: String         -- ARG[0] pinType
-    -> String         -- ARG[1] pullup
-    -> String         -- ARG[2] negTrigger
-    -> String         -- ARG[3] ioStandard
-    -> Signal dom Bit -- ARG[4] latchInputValue
-    -> Signal dom Bit -- ARG[5] clockEnable
-    -> Clock domIn    -- ARG[6] inputClk
-    -> Clock domOut   -- ARG[7] outputClk
-    -> Signal dom Bit -- ARG[8] outputEnable
-    -> Signal dom Bit -- ARG[9] dOut0
+    :: String         -- ARG[0]  pinType
+    -> String         -- ARG[1]  pullup
+    -> String         -- ARG[2]  negTrigger
+    -> String         -- ARG[3]  ioStandard
+    -> Signal dom Bit -- ARG[4]  latchInputValue
+    -> Signal dom Bit -- ARG[5]  clockEnable
+    -> Clock domIn    -- ARG[6]  inputClk
+    -> Clock domOut   -- ARG[7]  outputClk
+    -> Signal dom Bit -- ARG[8]  outputEnable
+    -> Signal dom Bit -- ARG[9]  dOut0
     -> Signal dom Bit -- ARG[10] dOut1
     -> Unbundled dom
          ( Bit -- packagePin
@@ -60,20 +60,20 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# NOINLINE ioPrim #-}
 ioPrim
-  :: String         -- ARG[0] pinType
-  -> String         -- ARG[1] pullup
-  -> String         -- ARG[2] negTrigger
-  -> String         -- ARG[3] ioStandard
-  -> Signal dom Bit -- ARG[4] latchInputValue
-  -> Signal dom Bit -- ARG[5] clockEnable
-  -> Clock domIn    -- ARG[6] inputClk
-  -> Clock domOut   -- ARG[7] outputClk
-  -> Signal dom Bit -- ARG[8] outputEnable
-  -> Signal dom Bit -- ARG[9] dOut0
+  :: String         -- ARG[0]  pinType
+  -> String         -- ARG[1]  pullup
+  -> String         -- ARG[2]  negTrigger
+  -> String         -- ARG[3]  ioStandard
+  -> Signal dom Bit -- ARG[4]  latchInputValue
+  -> Signal dom Bit -- ARG[5]  clockEnable
+  -> Clock domIn    -- ARG[6]  inputClk
+  -> Clock domOut   -- ARG[7]  outputClk
+  -> Signal dom Bit -- ARG[8]  outputEnable
+  -> Signal dom Bit -- ARG[9]  dOut0
   -> Signal dom Bit -- ARG[10] dOut1
   -> Unbundled dom
        ( Bit -- packagePin
        , Bit -- dIn0
        , Bit -- dIn1
        )
-ioPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = ( pure 0, pure 0, pure 0)
+ioPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0)
