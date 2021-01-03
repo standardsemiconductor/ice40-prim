@@ -11,7 +11,7 @@ import Data.String.Interpolate.Util (unindent)
        , "kind" : "Declaration"
        , "type" :
   "ioPrim
-    :: String         -- ARG[0]  pinType
+    :: BitVector 6    -- ARG[0]  pinType
     -> String         -- ARG[1]  pullup
     -> String         -- ARG[2]  negTrigger
     -> String         -- ARG[3]  ioStandard
@@ -60,7 +60,7 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# NOINLINE ioPrim #-}
 ioPrim
-  :: String         -- ARG[0]  pinType
+  :: BitVector 6    -- ARG[0]  pinType
   -> String         -- ARG[1]  pullup
   -> String         -- ARG[2]  negTrigger
   -> String         -- ARG[3]  ioStandard
