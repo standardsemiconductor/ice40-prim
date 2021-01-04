@@ -5,7 +5,6 @@ import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 
-{-# ANN ioPrim hasBlackBox #-}
 {-# ANN ioPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
        { "name" : "Ice40.IO.ioPrim"
