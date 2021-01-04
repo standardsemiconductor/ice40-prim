@@ -7,7 +7,7 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# ANN rgbPrim (InlinePrimitive [Verilog] $ unindent [i|
   [ { "BlackBox" :
-      { "name" : "Semi.Ice40.Rgb.rgbPrim"
+      { "name" : "Ice40.Rgb.rgbPrim"
       , "kind" : "Declaration"
       , "type" :
   "rgbPrim
@@ -35,7 +35,7 @@ import Data.String.Interpolate.Util (unindent)
      .RGB0_CURRENT ( ~ARG[1] ),
      .RGB1_CURRENT ( ~ARG[2] ),
      .RGB2_CURRENT ( ~ARG[3] )
-  ) ~GENSYM[rgba_drv_inst] (
+  ) ~GENSYM[rgba_drv_inst][3] (
      .CURREN       ( ~ARG[4] ),
      .RGBLEDEN     ( ~ARG[5] ),
      .RGB0PWM      ( ~ARG[6] ),
