@@ -1,7 +1,4 @@
-module Ice40.Rgb
-  ( Rgb
-  , rgb
-  ) where
+module Ice40.Rgb where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -14,34 +11,39 @@ import Data.String.Interpolate.Util (unindent)
       , "kind" : "Declaration"
       , "type" :
   "rgbPrim
-  :: String         -- current_mode ARG[0]
-  -> String         -- rgb0_current ARG[1]
-  -> String         -- rgb1_current ARG[2]
-  -> String         -- rgb2_current ARG[3]
-  -> Signal dom Bit -- pwm_r        ARG[4]
-  -> Signal dom Bit -- pwm_g        ARG[5]
-  -> Signal dom Bit -- pwm_b        ARG[6]
-  -> Signal dom (Bit, Bit, Bit)"
+  :: String           -- currentMode ARG[0]
+  -> String           -- rgb0Current ARG[1]
+  -> String           -- rgb1Current ARG[2]
+  -> String           -- rgb2Current ARG[3]
+  -> Signal dom Bit   -- curren      ARG[4]
+  -> Signal dom Bit   -- rgbleden    ARG[5]
+  -> Signal dom Bit   -- rgb0Pwm     ARG[6]
+  -> Signal dom Bit   -- rgb1Pwm     ARG[7]
+  -> Signal dom Bit   -- rgb2Pwm     ARG[8]
+  -> Signal dom ( Bit -- rgb0
+                , Bit -- rgb1
+                , Bit -- rgb2
+                )"
       , "template" :
   "//SB_RGBA_DRV begin
-  wire ~GENSYM[RED][0];
-  wire ~GENSYM[GREEN][1];
-  wire ~GENSYM[BLUE][2];
+  wire ~GENSYM[rgb0][0];
+  wire ~GENSYM[rgb1][1];
+  wire ~GENSYM[rgb2][2];
 
   SB_RGBA_DRV #(
-     .CURRENT_MODE(~ARG[0]),
-     .RGB0_CURRENT(~ARG[1]),
-     .RGB1_CURRENT(~ARG[2]),
-     .RGB2_CURRENT(~ARG[3])
-  ) RGBA_DRIVER (
-     .CURREN(1'b1),
-     .RGBLEDEN(1'b1),
-     .RGB0PWM(~ARG[4]),
-     .RGB1PWM(~ARG[5]),
-     .RGB2PWM(~ARG[6]),
-     .RGB0(~SYM[0]),
-     .RGB1(~SYM[1]),
-     .RGB2(~SYM[2])
+     .CURRENT_MODE ( ~ARG[0] ),
+     .RGB0_CURRENT ( ~ARG[1] ),
+     .RGB1_CURRENT ( ~ARG[2] ),
+     .RGB2_CURRENT ( ~ARG[3] )
+  ) ~GENSYM[rgba_drv_inst] (
+     .CURREN       ( ~ARG[4] ),
+     .RGBLEDEN     ( ~ARG[5] ),
+     .RGB0PWM      ( ~ARG[6] ),
+     .RGB1PWM      ( ~ARG[7] ),
+     .RGB2PWM      ( ~ARG[8] ),
+     .RGB0         ( ~SYM[0] ),
+     .RGB1         ( ~SYM[1] ),
+     .RGB2         ( ~SYM[2] )
   );
  
   assign ~RESULT = {~SYM[0], ~SYM[1], ~SYM[2]};
@@ -53,18 +55,17 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# NOINLINE rgbPrim #-}
 rgbPrim
-  :: String
-  -> String
-  -> String
-  -> String
-  -> Signal dom Bit
-  -> Signal dom Bit
-  -> Signal dom Bit
-  -> Signal dom (Bit, Bit, Bit)
-rgbPrim !_ !_ !_ !_ !_ !_ !_ = pure (0, 0, 0)
-
-type Rgb = ("red" ::: Bit, "green" ::: Bit, "blue" ::: Bit)
-
-rgb :: Signal dom Rgb -> Signal dom Rgb
-rgb rgbS = let (r, g, b) = unbundle rgbS
-                in rgbPrim "0b0" "0b111111" "0b111111" "0b111111" r g b
+  :: String           -- currentMode
+  -> String           -- rgb0Current
+  -> String           -- rgb1Current
+  -> String           -- rgb2Current
+  -> Signal dom Bit   -- curren
+  -> Signal dom Bit   -- rgbleden
+  -> Signal dom Bit   -- rgb0Pwm
+  -> Signal dom Bit   -- rgb1Pwm
+  -> Signal dom Bit   -- rgb2Pwm
+  -> Signal dom ( Bit -- rgb0
+                , Bit -- rgb1
+                , Bit -- rgb2
+                )
+rgbPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ = pure (0, 0, 0)
