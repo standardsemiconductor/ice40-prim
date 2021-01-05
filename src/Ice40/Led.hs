@@ -1,4 +1,7 @@
-module Ice40.Led where
+module Ice40.Led
+  ( ledPrim
+  , led
+  ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -94,3 +97,38 @@ ledPrim
                    , Bool -- leddon
                    )
 ledPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0, pure False)
+
+{-# NOINLINE led #-}
+led
+  :: HiddenClock dom
+  => Signal dom Bit           -- cs
+  -> Signal dom (BitVector 8) -- dat
+  -> Signal dom (BitVector 4) -- addr
+  -> Signal dom Bool          -- en
+  -> Signal dom Bool          -- exe
+  -> Unbundled dom ( Bit      -- pwmOut0
+                   , Bit      -- pwmOut1
+                   , Bit      -- pwmOut2
+                   , Bool     -- on
+                   )
+led cs dat addr en exe = (pwmOut0, pwmOut1, pwmOut2, on)
+  where
+    (pwmOut0, pwmOut1, pwmOut2, on) = ledPrim cs
+                                              hasClock
+                                              (bitAt 7 dat)
+                                              (bitAt 6 dat)
+                                              (bitAt 5 dat)
+                                              (bitAt 4 dat)
+                                              (bitAt 3 dat)
+                                              (bitAt 2 dat)
+                                              (bitAt 1 dat)
+                                              (bitAt 0 dat)
+                                              (bitAt 3 addr)
+                                              (bitAt 2 addr)
+                                              (bitAt 1 addr)
+                                              (bitAt 0 addr)
+                                              en
+                                              exe
+
+bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
+bitAt n = fmap (!n)
