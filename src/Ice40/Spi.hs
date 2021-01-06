@@ -274,3 +274,4 @@ spi busAddr sbrwi sbstbi sbadri sbdati bi wi wcki wcsni =
 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
 bitAt n = fmap (!n)
+
