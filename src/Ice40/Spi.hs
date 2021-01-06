@@ -221,7 +221,6 @@ spiPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0     -- bcsnoe
                     )
 
-{-# NOINLINE spi #-}
 spi
   :: HiddenClock dom
   => String                   -- busAddr
