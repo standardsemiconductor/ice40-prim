@@ -1,4 +1,5 @@
-module Ice40.IO
+module Ice40.IO where
+{-
   ( io
 --  , PinType(..)
   , PinInput(..)
@@ -7,8 +8,9 @@ module Ice40.IO
 --  , PinIn(..)
 --  , defaultPinIn
 --  , PinOut(..)
+  , ioPrim
   ) where
-
+-}
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
@@ -208,6 +210,7 @@ io pinIn = PinOut
                                     (dOut1 pinIn)
 -}
 
+-- {-# NOINLINE io #-}
 io
   :: PinInput
   -> PinOutput

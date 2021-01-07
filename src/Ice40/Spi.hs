@@ -1,7 +1,4 @@
-module Ice40.Spi
-  ( spiPrim
-  , spi
-  ) where
+module Ice40.Spi where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
