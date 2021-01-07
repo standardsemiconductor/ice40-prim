@@ -1,16 +1,5 @@
 module Ice40.IO where
-{-
-  ( io
---  , PinType(..)
-  , PinInput(..)
-  , PinOutput(..)
-  , IOStandard(..)
---  , PinIn(..)
---  , defaultPinIn
---  , PinOut(..)
-  , ioPrim
-  ) where
--}
+
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
@@ -133,13 +122,6 @@ fromPinOutput = \case
   PinOutputRegisteredEnableInverted           -> 0b1011
   PinOutputRegisteredEnableRegisteredInverted -> 0b1111
 
-{-
-data PinType = PinType PinInput PinOutput
-  deriving (Generic, Show, Read, Eq)
-
-fromPinType :: PinType -> BitVector 6
-fromPinType (PinType input output) = fromPinOutput output ++# fromPinInput input 
--}
 data IOStandard = SBLVCMOS
                 | SBLVDSINPUT
   deriving (Generic, Show, Read, Eq)
@@ -148,69 +130,7 @@ fromIOStandard :: IOStandard -> String
 fromIOStandard = \case
   SBLVCMOS    -> "SB_LVCMOS"
   SBLVDSINPUT -> "SB_LVDS_INPUT"
-{-
-data PinIn domEn domIn domOut = PinIn
-  { pinType         :: PinType
-  , pullUp          :: Bit
-  , negTrigger      :: Bit
-  , ioStandard      :: IOStandard
-  , latchInputValue :: Signal domIn Bit
-  , clockEnable     :: Signal domEn Bit
-  , inputClk        :: Clock domIn
-  , outputClk       :: Clock domOut
-  , outputEnable    :: Signal domOut Bit
-  , dOut0           :: Signal domOut Bit
-  , dOut1           :: Signal domOut Bit
-  }
-  deriving (Generic, Show)
 
-defaultPinIn
-  :: KnownDomain domIn
-  => KnownDomain domOut
-  => PinIn domEn domIn domOut
-defaultPinIn = PinIn
-  { pinType         = PinType PinInputRegistered PinNoOutput
-  , pullUp          = 0
-  , negTrigger      = 0
-  , ioStandard      = SBLVCMOS
-  , latchInputValue = pure 0
-  , clockEnable     = pure 1
-  , inputClk        = clockGen
-  , outputClk       = clockGen
-  , outputEnable    = pure 0
-  , dOut0           = pure 0
-  , dOut1           = pure 0
-  }
-
-data PinOut domPin domIn = PinOut
-  { packagePin :: Signal domPin Bit
-  , dIn0       :: Signal domIn Bit
-  , dIn1       :: Signal domIn Bit
-  }
-  deriving (Generic, Show)
-
-io :: PinIn domEn domIn domOut -> PinOut domPin domIn
-io pinIn = PinOut
-  { packagePin = packagePin'
-  , dIn0 = dIn0'
-  , dIn1 = dIn1'
-  }
-  where
-    (packagePin', dIn0', dIn1') = ioPrim
-                                    (fromPinType $ pinType pinIn)
-                                    (pullUp pinIn)
-                                    (negTrigger pinIn)
-                                    (fromIOStandard $ ioStandard pinIn)
-                                    (latchInputValue pinIn)
-                                    (clockEnable pinIn)
-                                    (inputClk pinIn)
-                                    (outputClk pinIn)
-                                    (outputEnable pinIn)
-                                    (dOut0 pinIn)
-                                    (dOut1 pinIn)
--}
-
--- {-# NOINLINE io #-}
 io
   :: PinInput
   -> PinOutput
