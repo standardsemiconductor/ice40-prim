@@ -1,12 +1,12 @@
 module Ice40.IO
   ( io
-  , PinType(..)
+--  , PinType(..)
   , PinInput(..)
   , PinOutput(..)
   , IOStandard(..)
-  , PinIn(..)
-  , defaultPinIn
-  , PinOut(..)
+--  , PinIn(..)
+--  , defaultPinIn
+--  , PinOut(..)
   ) where
 
 import Clash.Prelude
@@ -131,12 +131,13 @@ fromPinOutput = \case
   PinOutputRegisteredEnableInverted           -> 0b1011
   PinOutputRegisteredEnableRegisteredInverted -> 0b1111
 
+{-
 data PinType = PinType PinInput PinOutput
   deriving (Generic, Show, Read, Eq)
 
 fromPinType :: PinType -> BitVector 6
 fromPinType (PinType input output) = fromPinOutput output ++# fromPinInput input 
-
+-}
 data IOStandard = SBLVCMOS
                 | SBLVDSINPUT
   deriving (Generic, Show, Read, Eq)
@@ -145,7 +146,7 @@ fromIOStandard :: IOStandard -> String
 fromIOStandard = \case
   SBLVCMOS    -> "SB_LVCMOS"
   SBLVDSINPUT -> "SB_LVDS_INPUT"
-
+{-
 data PinIn domEn domIn domOut = PinIn
   { pinType         :: PinType
   , pullUp          :: Bit
@@ -205,4 +206,28 @@ io pinIn = PinOut
                                     (outputEnable pinIn)
                                     (dOut0 pinIn)
                                     (dOut1 pinIn)
-             
+-}
+
+io
+  :: PinInput
+  -> PinOutput
+  -> Bit                 -- pullUp
+  -> Bit                 -- negTrigger
+  -> IOStandard
+  -> Signal domIn Bit    -- latchInputValue
+  -> Signal domEn Bit    -- clockEnable
+  -> Clock domIn         -- inputClk
+  -> Clock domOut        -- outputClk
+  -> Signal domOut Bit   -- outputEnable
+  -> Signal domOut Bit   -- dOut0
+  -> Signal domOut Bit   -- dOut1
+  -> ( Signal domPin Bit -- packagePin
+     , Signal domIn Bit  -- dIn0
+     , Signal domIn Bit  -- dIn1
+     )
+io pinInput pinOutput pullUp negTrigger ioStandard
+  = ioPrim
+      (fromPinOutput pinOutput ++# fromPinInput pinInput)
+      pullUp
+      negTrigger
+      (fromIOStandard ioStandard)
