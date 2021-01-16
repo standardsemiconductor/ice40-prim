@@ -19,7 +19,7 @@ import Ice40.Clock
 
 {-# ANN lfPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Semi.Ice40.Osc.lfPrim"
+       { "name" : "Ice40.Osc.lfPrim"
        , "kind" : "Declaration"
        , "type" :
   "lfPrim :: Clock Lattice10kHz"
@@ -51,7 +51,7 @@ lf10kHz = lfPrim
 
 {-# ANN hfPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Semi.Ice40.Osc.hfPrim"
+       { "name" : "Ice40.Osc.hfPrim"
        , "kind" : "Declaration"
        , "type" :
   "hfPrim
