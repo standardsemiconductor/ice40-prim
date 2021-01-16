@@ -10,6 +10,7 @@ module Ice40.Clock
   , Lattice24Mhz
   , Lattice12Mhz
   , Lattice6Mhz
+  , latticeRst
   ) where
 
 import Clash.Prelude
@@ -19,3 +20,6 @@ createDomain vXilinxSystem{vName="Lattice48Mhz", vPeriod=20833}
 createDomain vXilinxSystem{vName="Lattice24Mhz", vPeriod=41666}
 createDomain vXilinxSystem{vName="Lattice12Mhz", vPeriod=83333}
 createDomain vXilinxSystem{vName="Lattice6Mhz",  vPeriod=166660}
+
+latticeRst :: KnownDomain dom => Reset dom
+latticeRst = unsafeFromHighPolarity $ pure False
