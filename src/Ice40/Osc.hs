@@ -17,17 +17,20 @@ import Ice40.Clock
 -- Low Frequency Oscillator --
 ------------------------------
 
-{-# ANN lfPrim (InlinePrimitive [Verilog] $ unindent [i|
+{-# ANN lf10kHz (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Ice40.Osc.lfPrim"
+       { "name" : "Ice40.Osc.lf10kHz"
        , "kind" : "Declaration"
        , "type" :
-  "lfPrim :: Clock Lattice10kHz"
+  "lf10kHz
+  :: Signal dom Bool -- ARG[0] clkLfPu
+  -> Signal dom Bool -- ARG[1] clkLfEn
+  -> Clock Lattice10kHz"
        , "template" :
   "//SB_LFOSC begin
-  SB_LFOSC sb_lfosc_inst (   
-  .CLKLFEN (1),
-  .CLKLFPU (1), 
+  SB_LFOSC ~GENSYM[sb_lfosc_inst][0] (   
+  .CLKLFEN (~ARG[0]),
+  .CLKLFPU (~ARG[1]), 
   .CLKLF   (~RESULT)
   );
   //SB_LFOSC end"
@@ -36,14 +39,12 @@ import Ice40.Clock
   ]
   |]) #-}
 
-{-# ANN lfPrim hasBlackBox #-}
-{-# NOINLINE lfPrim #-}
-lfPrim :: Clock Lattice10kHz
-lfPrim = Clock SSymbol
-
 {-# NOINLINE lf10kHz #-}
-lf10kHz :: Clock Lattice10kHz
-lf10kHz = lfPrim
+lf10kHz
+  :: Signal dom Bool -- ARG[0] clkLfPu
+  -> Signal dom Bool -- ARG[1] clkLfEn
+  -> Clock Lattice10kHz
+lf10kHz !_ !_ = Clock SSymbol
 
 -------------------------------
 -- High Frequency Oscillator --
