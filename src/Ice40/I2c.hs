@@ -175,7 +175,6 @@ i2cPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0
                     )
 
-{-# NOINLINE i2c #-}
 i2c
   :: HiddenClock dom
   => String                   -- initAddr
