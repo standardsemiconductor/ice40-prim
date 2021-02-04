@@ -107,21 +107,21 @@ import Data.String.Interpolate.Util (unindent)
     .SDAOE   ( ~SYM[14] )
   );
 
-  assign ~RESULT = { ~SYM[0]  -- sbdato7
-                   , ~SYM[1]  -- sbdato6
-                   , ~SYM[2]  -- sbdato5
-                   , ~SYM[3]  -- sbdato4
-                   , ~SYM[4]  -- sbdato3
-                   , ~SYM[5]  -- sbdato2
-                   , ~SYM[6]  -- sbdato1
-                   , ~SYM[7]  -- sbdato0
-                   , ~SYM[8]  -- sbacko
-                   , ~SYM[9]  -- i2cirq
-                   , ~SYM[10] -- i2cwkup
-                   , ~SYM[11] -- sclo
-                   , ~SYM[12] -- scloe
-                   , ~SYM[13] -- sdao
-                   , ~SYM[14] -- sdaoe
+  assign ~RESULT = { ~SYM[0]  // sbdato7
+                   , ~SYM[1]  // sbdato6
+                   , ~SYM[2]  // sbdato5
+                   , ~SYM[3]  // sbdato4
+                   , ~SYM[4]  // sbdato3
+                   , ~SYM[5]  // sbdato2
+                   , ~SYM[6]  // sbdato1
+                   , ~SYM[7]  // sbdato0
+                   , ~SYM[8]  // sbacko
+                   , ~SYM[9]  // i2cirq
+                   , ~SYM[10] // i2cwkup
+                   , ~SYM[11] // sclo
+                   , ~SYM[12] // scloe
+                   , ~SYM[13] // sdao
+                   , ~SYM[14] // sdaoe
                    };
   //SB_I2C end"
        }

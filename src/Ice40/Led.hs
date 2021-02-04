@@ -98,7 +98,6 @@ ledPrim
                    )
 ledPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0, pure False)
 
-{-# NOINLINE led #-}
 led
   :: HiddenClock dom
   => Signal dom Bit           -- cs
