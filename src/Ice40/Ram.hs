@@ -12,7 +12,7 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# ANN ramPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Semi.Ice40.Ram.ramPrim"
+       { "name" : "Ice40.Ram.ramPrim"
        , "kind" : "Declaration"
        , "type" :
   "ramPrim
@@ -93,21 +93,21 @@ ramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
 
 ram16k16
   :: HiddenClock dom
-  => Signal dom (BitVector 14) -- address         
-  -> Signal dom (BitVector 16) -- dataIn
-  -> Signal dom (BitVector 4)  -- maskWrEn
-  -> Signal dom Bit            -- wrEn
-  -> Signal dom (BitVector 16) -- dataOut
+  => Signal dom (BitVector 14) -- ^ address         
+  -> Signal dom (BitVector 16) -- ^ dataIn
+  -> Signal dom (BitVector 4)  -- ^ maskWrEn
+  -> Signal dom Bit            -- ^ wrEn
+  -> Signal dom (BitVector 16) -- ^ dataOut
 ram16k16 address dataIn maskWrEn wrEn
   = ramPrim hasClock address dataIn maskWrEn wrEn (pure 1) (pure 0) (pure 0) (pure 1)
 
 ram32k16
   :: HiddenClockResetEnable dom
-  => Signal dom (BitVector 15) -- address        
-  -> Signal dom (BitVector 16) -- dataIn
-  -> Signal dom (BitVector 4)  -- maskWrEn
-  -> Signal dom Bit            -- wrEn
-  -> Signal dom (BitVector 16) -- dataOut
+  => Signal dom (BitVector 15) -- ^ address        
+  -> Signal dom (BitVector 16) -- ^ dataIn
+  -> Signal dom (BitVector 4)  -- ^ maskWrEn
+  -> Signal dom Bit            -- ^ wrEn
+  -> Signal dom (BitVector 16) -- ^ dataOut
 ram32k16 address dataIn maskWrEn wrEn = mux addrMsbHigh' dataOutH dataOutL
   where
     dataOutH = ram16k16 address' dataIn maskWrEn wrEnH
@@ -120,11 +120,11 @@ ram32k16 address dataIn maskWrEn wrEn = mux addrMsbHigh' dataOutH dataOutL
 
 ram16k32
   :: HiddenClock dom
-  => Signal dom (BitVector 14) -- address        
-  -> Signal dom (BitVector 32) -- dataIn
-  -> Signal dom (BitVector 8)  -- maskWrEn
-  -> Signal dom Bit            -- wrEn
-  -> Signal dom (BitVector 32) -- dataOut
+  => Signal dom (BitVector 14) -- ^ address        
+  -> Signal dom (BitVector 32) -- ^ dataIn
+  -> Signal dom (BitVector 8)  -- ^ maskWrEn
+  -> Signal dom Bit            -- ^ wrEn
+  -> Signal dom (BitVector 32) -- ^ dataOut
 ram16k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
   where
     dataOutH = ram16k16 address dataInH maskWrEnH wrEn
@@ -134,11 +134,11 @@ ram16k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
 
 ram32k32
   :: HiddenClockResetEnable dom
-  => Signal dom (BitVector 15) -- address
-  -> Signal dom (BitVector 32) -- dataIn
-  -> Signal dom (BitVector 8)  -- maskWrEn
-  -> Signal dom Bit            -- wrEn
-  -> Signal dom (BitVector 32) -- dataOut        
+  => Signal dom (BitVector 15) -- ^ address
+  -> Signal dom (BitVector 32) -- ^ dataIn
+  -> Signal dom (BitVector 8)  -- ^ maskWrEn
+  -> Signal dom Bit            -- ^ wrEn
+  -> Signal dom (BitVector 32) -- ^ dataOut        
 ram32k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
   where
     dataOutH = ram32k16 address dataInH maskWrEnH wrEn
