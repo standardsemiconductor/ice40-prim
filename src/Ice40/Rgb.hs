@@ -1,3 +1,12 @@
+{-|
+Module : Ice40.Rgb
+Description : Ice40 RGB hard IP primitive
+Copyright : (c) David Cox, 2021
+License : BSD 3-Clause
+Maintainer : standardsemiconductor@gmail.com
+
+RGB hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
 module Ice40.Rgb where
 
 import Clash.Prelude
@@ -53,19 +62,21 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+-- | SB_RGBA_DRV primitive is the RGB LED drive module which contains 3 dedicated open drain I/O pins for RGB LED outputs. Eac of the RGB LED output is bonded out together with an SB_IO_OD primitive to the package pin. User can either use SB_RGB_DRV primitive or the SB_IO_OD primitive to drive the package pin, but not both.
+--   The primitive allows configuration of each of the 3 RGB LED outputs individually. When the RGBx_CURRENT parameter of RGBx output is set to "0b000000", then SB_IO_OD can be used to drive the package pin. "0b000001" = 4mA for Full Mode; 2mA for Half Mode. "0b000011" = 8mA for Full Mode; 4mA for Half Mode. "0b000111" = 12mA for Full Mode; 6mA for Half Mode. "0b001111" = 16mA for Full Mode; 8mA for Half Mode. "0b011111" = 20mA for Full Mode; 10mA for Half Mode. "0b111111" = 24mA for Full Mode; 12mA for Half Mode.
 {-# NOINLINE rgbPrim #-}
 rgbPrim
-  :: String           -- currentMode
-  -> String           -- rgb0Current
-  -> String           -- rgb1Current
-  -> String           -- rgb2Current
-  -> Signal dom Bit   -- curren
-  -> Signal dom Bit   -- rgbleden
-  -> Signal dom Bit   -- rgb0Pwm
-  -> Signal dom Bit   -- rgb1Pwm
-  -> Signal dom Bit   -- rgb2Pwm
-  -> Signal dom ( Bit -- rgb0
-                , Bit -- rgb1
-                , Bit -- rgb2
+  :: String           -- ^ currentMode - Parameter values: "0b0" = Full Current Mode (Default), "0b1" = Half Current Mode.
+  -> String           -- ^ rgb0Current
+  -> String           -- ^ rgb1Current
+  -> String           -- ^ rgb2Current
+  -> Signal dom Bit   -- ^ curren - enable the mixed signal control block to supply reference current to the IR drivers. When it is not enabled (CURREN=0), no current is supplied, and the IR drivers are powered down. Enabling the mixed signal control block takes 100us to reach a stable reference current value.
+  -> Signal dom Bit   -- ^ rgbleden - enable the SB_RGB_DRV primitive. Active High.
+  -> Signal dom Bit   -- ^ rgb0Pwm - input data to drive RGB0 LED pin. This input is usually driven from the SB_LEDD_IP.
+  -> Signal dom Bit   -- ^ rgb1Pwm - input data to drive RGB1 LED pin. This input is usually driven from the SB_LEDD_IP.
+  -> Signal dom Bit   -- ^ rgb2Pwm - input data to drive RGB2 LED pin. This input is usually driven from teh SB_LEDD_IP.
+  -> Signal dom ( Bit -- ^ rgb0 - RGB0 LED output
+                , Bit -- ^ rgb1 - RGB1 LED output
+                , Bit -- ^ rgb2 - RGB2 LED output
                 )
 rgbPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ = pure (0, 0, 0)

@@ -41,14 +41,15 @@ import Ice40.Clock
 
 {-# NOINLINE lf10kHz #-}
 lf10kHz
-  :: Signal dom Bool -- ARG[0] clkLfPu
-  -> Signal dom Bool -- ARG[1] clkLfEn
-  -> Clock Lattice10kHz
+  :: Signal dom Bool -- ^ CLKLFPU - Power up the LFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
+  -> Signal dom Bool -- ^ CLKLFEN - Enable the clock output. Enable should be low for the 100us power up period. Active High.
+  -> Clock Lattice10kHz -- ^ LF Oscillator output
 lf10kHz !_ !_ = Clock SSymbol
 
 -------------------------------
 -- High Frequency Oscillator --
 -------------------------------
+-- | SB_HFOSC primitive generates 48MHz nominal clock frequency within +/-10% variation, with user programmable divider value of 1, 2, 4, and 8. the HFOSC can drive either the global clock network or fabric routes directly based on the clock network selection.
 
 {-# ANN hfPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
@@ -87,29 +88,29 @@ hfPrim !_ !_ !_ = Clock SSymbol
 
 hf48Mhz
   :: KnownDomain dom
-  => Signal dom Bool
-  -> Signal dom Bool
-  -> Clock Lattice48Mhz
+  => Signal dom Bool -- ^ CLKHFEN Enable the clock output. Enable should be low for the 100us power up period. Active High.
+  -> Signal dom Bool -- ^ CLKHFPU Power up the HFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
+  -> Clock Lattice48Mhz -- ^ HF Oscillator output
 hf48Mhz = hfPrim "0b00"
 
 hf24Mhz
   :: KnownDomain dom
-  => Signal dom Bool
-  -> Signal dom Bool
-  -> Clock Lattice24Mhz
+  => Signal dom Bool -- ^ CLKHFEN Enable the clock output. Enable should be low for the 100us power up period. Active High.
+  -> Signal dom Bool -- ^ CLKHFPU Power up the HFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
+  -> Clock Lattice24Mhz -- ^ HF Oscillator output
 hf24Mhz = hfPrim "0b01"
 
 hf12Mhz
   :: KnownDomain dom
-  => Signal dom Bool
-  -> Signal dom Bool
-  -> Clock Lattice12Mhz
+  => Signal dom Bool -- ^ CLKHFEN Enable the clock output. Enable should be low for the 100us power up period. Active High.
+  -> Signal dom Bool -- ^ CLKHFPU Power up the HFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
+  -> Clock Lattice12Mhz -- ^ HF Oscillator output
 hf12Mhz = hfPrim "0b10"
 
 hf6Mhz
   :: KnownDomain dom
-  => Signal dom Bool
-  -> Signal dom Bool
-  -> Clock Lattice6Mhz
+  => Signal dom Bool -- ^ CLKHFEN Enable the clock output. Enable should be low for the 100us power up period. Active High.
+  -> Signal dom Bool -- ^ CLKHFPU Power up the HFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
+  -> Clock Lattice6Mhz -- ^ HF Oscillator output
 hf6Mhz = hfPrim "0b11"
   

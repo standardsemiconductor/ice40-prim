@@ -1,7 +1,13 @@
-module Ice40.Led
-  ( ledPrim
-  , led
-  ) where
+{-|
+Module      : Ice40.Led
+Description : LED Ice40 hard IP primitive
+Copyright   : (c) David Cox, 2021
+License     : BSD 3-Clause
+Maintainer  : standardsemiconductor@gmail.com
+
+LED hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
+module Ice40.Led ( led ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -75,13 +81,13 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# NOINLINE ledPrim #-}
 ledPrim
-  :: Signal dom Bit       -- ARG[0]  leddcs
-  -> Clock dom            -- ARG[1]  leddclk
-  -> Signal dom Bit       -- ARG[2]  ledddat7
-  -> Signal dom Bit       -- ARG[3]  ledddat6
-  -> Signal dom Bit       -- ARG[4]  ledddat5
-  -> Signal dom Bit       -- ARG[5]  ledddat4
-  -> Signal dom Bit       -- ARG[6]  ledddat3
+  :: Signal dom Bit       -- ARG[0]  leddcs - CS to write LEDD IP registers
+  -> Clock dom            -- ARG[1]  leddclk - Clock to write LEDD IP registers
+  -> Signal dom Bit       -- ARG[2]  ledddat7 - bit 7 data to write into the LEDD IP registers
+  -> Signal dom Bit       -- ARG[3]  ledddat6 - bit 6 data to write into the LEDD IP registers
+  -> Signal dom Bit       -- ARG[4]  ledddat5 - bit 5 data to write into the LEDD IP registers
+  -> Signal dom Bit       -- ARG[5]  ledddat4 - bit 4 data to write into the LEDD IP registers
+  -> Signal dom Bit       -- ARG[6]  ledddat3 - bit 3 data to write into the LEDD IP registers
   -> Signal dom Bit       -- ARG[7]  ledddat2
   -> Signal dom Bit       -- ARG[8]  ledddat1
   -> Signal dom Bit       -- ARG[9]  ledddat0
@@ -98,17 +104,18 @@ ledPrim
                    )
 ledPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0, pure False)
 
+-- | SB_LEDDA_IP primitive generates the RGB PWM outputs for the RGB LED drivers. The IP contains registers that are programmed in byte the SCI bus interface signals.
 led
   :: HiddenClock dom
-  => Signal dom Bit           -- cs
-  -> Signal dom (BitVector 8) -- dat
-  -> Signal dom (BitVector 4) -- addr
-  -> Signal dom Bool          -- en
-  -> Signal dom Bool          -- exe
-  -> Unbundled dom ( Bit      -- pwmOut0
-                   , Bit      -- pwmOut1
-                   , Bit      -- pwmOut2
-                   , Bool     -- on
+  => Signal dom Bit           -- ^ cs - CS to write LEDD IP registers
+  -> Signal dom (BitVector 8) -- ^ dat - data to write into the LEDD IP registers
+  -> Signal dom (BitVector 4) -- ^ addr - LEDD IP register address
+  -> Signal dom Bool          -- ^ en - data enable input to indicate data and address are stable
+  -> Signal dom Bool          -- ^ exe - enable to IP to run the blinking sequence. When it is LOW, the sequence stops at the nearest OFF state
+  -> Unbundled dom ( Bit      -- ^ pwmOut0
+                   , Bit      -- ^ pwmOut1
+                   , Bit      -- ^ pwmOut2
+                   , Bool     -- ^ on - indicating the LED is on
                    )
 led cs dat addr en exe = (pwmOut0, pwmOut1, pwmOut2, on)
   where
