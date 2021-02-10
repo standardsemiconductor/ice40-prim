@@ -7,7 +7,7 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# ANN spramPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Ice40.Ram.spramPrim"
+       { "name" : "Ice40.Spram.spramPrim"
        , "kind" : "Declaration"
        , "type" :
   "spramPrim
