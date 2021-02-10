@@ -75,8 +75,8 @@ rgbPrim
   -> Signal dom Bit   -- ^ rgb0Pwm - input data to drive RGB0 LED pin. This input is usually driven from the SB_LEDD_IP.
   -> Signal dom Bit   -- ^ rgb1Pwm - input data to drive RGB1 LED pin. This input is usually driven from the SB_LEDD_IP.
   -> Signal dom Bit   -- ^ rgb2Pwm - input data to drive RGB2 LED pin. This input is usually driven from teh SB_LEDD_IP.
-  -> Signal dom ( Bit -- ^ rgb0 - RGB0 LED output
-                , Bit -- ^ rgb1 - RGB1 LED output
-                , Bit -- ^ rgb2 - RGB2 LED output
-                )
+  -> Signal dom ( Bit
+                , Bit
+                , Bit
+                ) -- ^ (RGB0 LED output, RGB1 LED output, RGB2 LED output)
 rgbPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ = pure (0, 0, 0)

@@ -112,11 +112,11 @@ led
   -> Signal dom (BitVector 4) -- ^ addr - LEDD IP register address
   -> Signal dom Bool          -- ^ en - data enable input to indicate data and address are stable
   -> Signal dom Bool          -- ^ exe - enable to IP to run the blinking sequence. When it is LOW, the sequence stops at the nearest OFF state
-  -> Unbundled dom ( Bit      -- ^ pwmOut0
-                   , Bit      -- ^ pwmOut1
-                   , Bit      -- ^ pwmOut2
-                   , Bool     -- ^ on - indicating the LED is on
-                   )
+  -> Unbundled dom ( Bit 
+                   , Bit 
+                   , Bit 
+                   , Bool
+                   ) -- ^ (pwmOut0, pwmOut1, pwmOut2, LED on indicator)
 led cs dat addr en exe = (pwmOut0, pwmOut1, pwmOut2, on)
   where
     (pwmOut0, pwmOut1, pwmOut2, on) = ledPrim cs

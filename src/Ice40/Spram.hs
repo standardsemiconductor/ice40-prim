@@ -1,21 +1,16 @@
-module Ice40.Ram
-  ( ram16k16
-  , ram32k16
-  , ram16k32
-  , ram32k32
-  ) where
+module Ice40.Spram where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 
-{-# ANN ramPrim (InlinePrimitive [Verilog] $ unindent [i|
+{-# ANN spramPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Ice40.Ram.ramPrim"
+       { "name" : "Ice40.Ram.spramPrim"
        , "kind" : "Declaration"
        , "type" :
-  "ramPrim
+  "spramPrim
   :: KnownDomain dom            -- ARG[0] 
   => Clock dom                  -- ARG[1]  clock
   -> Signal dom (BitVector 14)  -- ARG[2]  address
@@ -49,8 +44,8 @@ import Data.String.Interpolate.Util (unindent)
 
 data Nyb = Nyb3 | Nyb2 | Nyb1 | Nyb0
 
-{-# NOINLINE ramPrim #-}
-ramPrim
+{-# NOINLINE spramPrim #-}
+spramPrim
   :: KnownDomain dom            -- ARG[0] 
   => Clock dom                  -- ARG[1]  clock
   -> Signal dom (BitVector 14)  -- ARG[2]  address
@@ -62,7 +57,7 @@ ramPrim
   -> Signal dom Bit             -- ARG[8]  sleep
   -> Signal dom Bit             -- ARG[9] powerOff
   -> Signal dom (BitVector 16)  -- dataOut"
-ramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
+spramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
   = concat4 <$> nyb3 <*> nyb2 <*> nyb1 <*> nyb0
   where
     addressU = unpack <$> address
@@ -90,58 +85,59 @@ ramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
     writeGuard n dIn addr en mask
       | bitToBool en && (not.bitToBool) (nybMask n mask) = Just (addr, nybSlice n dIn)
       | otherwise = Nothing
-
-ram16k16
+{-
+spram16k16
   :: HiddenClock dom
   => Signal dom (BitVector 14) -- ^ address         
   -> Signal dom (BitVector 16) -- ^ dataIn
   -> Signal dom (BitVector 4)  -- ^ maskWrEn
   -> Signal dom Bit            -- ^ wrEn
   -> Signal dom (BitVector 16) -- ^ dataOut
-ram16k16 address dataIn maskWrEn wrEn
-  = ramPrim hasClock address dataIn maskWrEn wrEn (pure 1) (pure 0) (pure 0) (pure 1)
+spram16k16 address dataIn maskWrEn wrEn
+  = spramPrim hasClock address dataIn maskWrEn wrEn (pure 1) (pure 0) (pure 0) (pure 1)
 
-ram32k16
+spram32k16
   :: HiddenClockResetEnable dom
   => Signal dom (BitVector 15) -- ^ address        
   -> Signal dom (BitVector 16) -- ^ dataIn
   -> Signal dom (BitVector 4)  -- ^ maskWrEn
   -> Signal dom Bit            -- ^ wrEn
   -> Signal dom (BitVector 16) -- ^ dataOut
-ram32k16 address dataIn maskWrEn wrEn = mux addrMsbHigh' dataOutH dataOutL
+spram32k16 address dataIn maskWrEn wrEn = mux addrMsbHigh' dataOutH dataOutL
   where
-    dataOutH = ram16k16 address' dataIn maskWrEn wrEnH
-    dataOutL = ram16k16 address' dataIn maskWrEn wrEnL
+    dataOutH = spram16k16 address' dataIn maskWrEn wrEnH
+    dataOutL = spram16k16 address' dataIn maskWrEn wrEnL
     address' = slice d13 d0 <$> address
     addrMsbHigh = (== high) . msb <$> address
     wrEnH = mux addrMsbHigh wrEn $ pure 0
     wrEnL = mux addrMsbHigh (pure 0) wrEn
     addrMsbHigh' = delay False addrMsbHigh
 
-ram16k32
+spram16k32
   :: HiddenClock dom
   => Signal dom (BitVector 14) -- ^ address        
   -> Signal dom (BitVector 32) -- ^ dataIn
   -> Signal dom (BitVector 8)  -- ^ maskWrEn
   -> Signal dom Bit            -- ^ wrEn
   -> Signal dom (BitVector 32) -- ^ dataOut
-ram16k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
+spram16k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
   where
-    dataOutH = ram16k16 address dataInH maskWrEnH wrEn
-    dataOutL = ram16k16 address dataInL maskWrEnL wrEn
+    dataOutH = spram16k16 address dataInH maskWrEnH wrEn
+    dataOutL = spram16k16 address dataInL maskWrEnL wrEn
     (dataInH, dataInL) = unbundle $ split <$> dataIn
     (maskWrEnH, maskWrEnL) = unbundle $ split <$> maskWrEn
 
-ram32k32
+spram32k32
   :: HiddenClockResetEnable dom
   => Signal dom (BitVector 15) -- ^ address
   -> Signal dom (BitVector 32) -- ^ dataIn
   -> Signal dom (BitVector 8)  -- ^ maskWrEn
   -> Signal dom Bit            -- ^ wrEn
   -> Signal dom (BitVector 32) -- ^ dataOut        
-ram32k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
+spram32k32 address dataIn maskWrEn wrEn = (++#) <$> dataOutH <*> dataOutL
   where
-    dataOutH = ram32k16 address dataInH maskWrEnH wrEn
-    dataOutL = ram32k16 address dataInL maskWrEnL wrEn
+    dataOutH = spram32k16 address dataInH maskWrEnH wrEn
+    dataOutL = spram32k16 address dataInL maskWrEnL wrEn
     (dataInH, dataInL) = unbundle $ split <$> dataIn
     (maskWrEnH, maskWrEnL) = unbundle $ split <$> maskWrEn
+-}
