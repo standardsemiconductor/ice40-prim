@@ -1,7 +1,7 @@
 # ice40-prim
 
 Lattice iCE40 Primitive IP
-## Currently Supported IP
+## Supported IP
 * [sysMem Single Port RAM Memory (SPRAM)](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Spram.hs) - For more information see the [iCE40 SPRAM Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/FPGA-TN-02022-1-2-iCE40-SPRAM-Usage-Guide.pdf)
   * Each block of SPRAM is 16k x 16 (256 kbits)
   * 16-bit data width with nibble mast control
@@ -16,7 +16,11 @@ Lattice iCE40 Primitive IP
 * [On-Chip Oscillator](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Osc.hs)
   * Low-power low frequency oscillator of 10 kHz
   * High frequency oscillator configurable to 48 Mhz, 24 Mhz, 12 Mhz, or 6 Mhz
-* [LED PWM IP](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Led.hs) - For more information see the [iCE40 LED Driver Usage Guide PDF]()
+* [RGB High Current Drive I/O Pins](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Rgb.hs) - For more information see the [iCE40 LED Driver Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/ICE40LEDDriverUsageGuide.pdf)
+  * Provides sinking current to an LED connecting to the positive supply
+  * Three outputs designed to drive the RGB LEDs
+  * RGB drive current is user programmable from 4mA to 24mA, in increments of 4mA
+* [LED PWM IP](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Led.hs) - For more information see the [iCE40 LED Driver Usage Guide PDF](https://github.com/standardsemiconductor/VELDT-info/blob/master/ICE40LEDDriverUsageGuide.pdf)
   * Provide easier usage of RGB high current drivers
   * Provides flexibility for user to dynamically change the modulation width of each of the RGB LED driver
   * User can dynamically change ON and OFF-time durations
@@ -28,6 +32,7 @@ Lattice iCE40 Primitive IP
   * Double-buffered data register
   * Serial clock with programmable polarity and phase
   * LSB First or MSB First data transfer
+* [sysIO](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/IO.hs)
 * [User I2C IP](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/I2c.hs) - For more information see the [Advanced SPI and I2C Usage Guide PDF](https://github.com/standardsemiconductor/VELDT-info/blob/master/AdvancediCE40SPII2CHardenedIPUsageGuide.pdf)
   * Boss and Worker operation
   * 7-bit and 10-bit addressing
