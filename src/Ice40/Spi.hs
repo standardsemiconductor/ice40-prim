@@ -47,6 +47,7 @@ data Spi = Spi
   }
 
 -- | spi primitive wrapper
+{-# NOINLINE spi #-}
 spi
   :: HiddenClock dom
   => String                   -- ^ busAddr
