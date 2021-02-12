@@ -26,26 +26,9 @@ module Ice40.Spi where
   ) where
 -}
 import Clash.Prelude
---import Ice40.Spi.Prim
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
-
--- | spi output record
-data Spi = Spi
-  { sbdato  :: BitVector 8
-  , sbacko  :: Bool       
-  , spiirq  :: Bit        
-  , spiwkup :: Bit        
-  , wo      :: Bit        
-  , woe     :: Bit        
-  , bo      :: Bit        
-  , boe     :: Bit        
-  , wcko    :: Bit        
-  , wckoe   :: Bit        
-  , bcsno   :: BitVector 4
-  , bcsnoe  :: BitVector 4
-  }
 
 -- | spi primitive wrapper
 spi
@@ -59,45 +42,45 @@ spi
   -> Signal dom Bit           -- ^ wi
   -> Signal dom Bit           -- ^ wcki
   -> Signal dom Bit           -- ^ wcsni
-  -> Signal dom Spi 
+  -> Unbundled dom 
+       ( BitVector 8 -- sbdato
+       , Bool        -- sbacko
+       , Bit         -- spiirq
+       , Bit         -- spiwkup
+       , Bit         -- wo
+       , Bit         -- woe
+       , Bit         -- bo
+       , Bit         -- boe
+       , Bit         -- wcko
+       , Bit         -- wckoe
+       , BitVector 4 -- bcsno
+       , BitVector 4 -- bcsnoe
+       )  
 spi busAddr sbrwi sbstbi sbadri sbdati bi wi wcki wcsni =
-  let (sbdato', sbacko', spiirq', spiwkup', wo', woe', bo', boe', wcko', wckoe', bcsno', bcsnoe') = spiPrim busAddr
-                              hasClock
-                              sbrwi
-                              sbstbi
-                              (bitAt 7 sbadri)
-                              (bitAt 6 sbadri)
-                              (bitAt 5 sbadri)
-                              (bitAt 4 sbadri)
-                              (bitAt 3 sbadri)
-                              (bitAt 2 sbadri)
-                              (bitAt 1 sbadri)
-                              (bitAt 0 sbadri)
-                              (bitAt 7 sbdati)
-                              (bitAt 6 sbdati)
-                              (bitAt 5 sbdati)
-                              (bitAt 4 sbdati)
-                              (bitAt 3 sbdati)
-                              (bitAt 2 sbdati)
-                              (bitAt 1 sbdati)
-                              (bitAt 0 sbdati)
-                              bi
-                              wi
-                              wcki
-                              wcsni
-  in Spi <$> sbdato'
-         <*> sbacko'
-         <*> spiirq'
-         <*> spiwkup'
-         <*> wo'
-         <*> woe'
-         <*> bo'
-         <*> boe'
-         <*> wcko'
-         <*> wckoe'
-         <*> bcsno'
-         <*> bcsnoe'
-
+  spiPrim busAddr
+          hasClock
+          sbrwi
+          sbstbi
+          (bitAt 7 sbadri)
+          (bitAt 6 sbadri)
+          (bitAt 5 sbadri)
+          (bitAt 4 sbadri)
+          (bitAt 3 sbadri)
+          (bitAt 2 sbadri)
+          (bitAt 1 sbadri)
+          (bitAt 0 sbadri)
+          (bitAt 7 sbdati)
+          (bitAt 6 sbdati)
+          (bitAt 5 sbdati)
+          (bitAt 4 sbdati)
+          (bitAt 3 sbdati)
+          (bitAt 2 sbdati)
+          (bitAt 1 sbdati)
+          (bitAt 0 sbdati)
+          bi
+          wi
+          wcki
+          wcsni
 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
 bitAt n = fmap (!n)
