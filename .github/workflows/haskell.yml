@@ -1,0 +1,50 @@
+name: Haskell CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # run at the start of every day
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }} 
+    strategy:
+      matrix:
+        ghc: ['8.6.5', '8.8.4', '8.10.2', '8.10.3']
+        cabal: ['3.0.0.0', '3.2.0.0']
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, macos-10.15]
+    name: ${{ matrix.os }} GHC ${{ matrix.ghc }} Cabal ${{ matrix.cabal }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Haskell
+      uses: haskell/actions/setup@v1
+      with:
+        ghc-version: ${{ matrix.ghc }}
+        cabal-version: ${{ matrix.cabal }}
+
+    - name: Cache
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-cabal
+      with:
+        path: ~/.cabal
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install dependencies
+      run: |
+        cabal update
+        cabal build --only-dependencies --enable-tests --enable-benchmarks
+    - name: Build
+      run: cabal build --enable-tests --enable-benchmarks all
+#    - name: Run tests
+#      run: cabal test all
