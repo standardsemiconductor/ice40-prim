@@ -14,6 +14,77 @@ import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 
+{-# ANN ioPrim (InlinePrimitive [Verilog] $ unindent [i|
+  [  { "BlackBox" :
+       { "name" : "Ice40.IO.ioPrim"
+       , "kind" : "Declaration"
+       , "type" :
+  "ioPrim
+    :: BitVector 6         -- ARG[0]  pinType
+    -> Bit                 -- ARG[1]  pullup
+    -> Bit                 -- ARG[2]  negTrigger
+    -> String              -- ARG[3]  ioStandard
+    -> Signal domIn Bit    -- ARG[4]  latchInputValue
+    -> Signal domEn Bit    -- ARG[5]  clockEnable
+    -> Clock domIn         -- ARG[6]  inputClk
+    -> Clock domOut        -- ARG[7]  outputClk
+    -> Signal domOut Bit   -- ARG[8]  outputEnable
+    -> Signal domOut Bit   -- ARG[9]  dOut0
+    -> Signal domOut Bit   -- ARG[10] dOut1
+    -> ( Signal domPin Bit -- packagePin
+       , Signal domIn Bit  -- dIn0
+       , Signal domIn Bit  -- dIn1
+       )"
+       , "template" :
+  "//SB_IO begin
+  wire ~GENSYM[package_pin][0];
+  wire ~GENSYM[d_in_0][1];
+  wire ~GENSYM[d_in_1][2];
+
+  SB_IO #(
+    .PIN_TYPE         ( ~ARG[0]  ),
+    .PULLUP           ( ~ARG[1]  ),
+    .NEG_TRIGGER      ( ~ARG[2]  ),
+    .IO_STANDARD      ( ~ARG[3]  )
+  ) ~GENSYM[sb_io_inst][3] (
+    .PACKAGE_PIN      ( ~SYM[0]  ),
+    .LATCH_INPUT_VALUE( ~ARG[4]  ),
+    .CLOCK_ENABLE     ( ~ARG[5]  ),
+    .INPUT_CLK        ( ~ARG[6]  ),
+    .OUTPUT_CLK       ( ~ARG[7]  ),
+    .OUTPUT_ENABLE    ( ~ARG[8]  ),
+    .D_OUT_0          ( ~ARG[9]  ),
+    .D_OUT_1          ( ~ARG[10] ),
+    .D_IN_0           ( ~SYM[1]  ),
+    .D_IN_1           ( ~SYM[2]  )
+  );
+
+  assign ~RESULT = { ~SYM[0], ~SYM[1], ~SYM[2] };
+  //SB_IO end"
+       }
+     }
+  ]
+  |]) #-}
+
+{-# NOINLINE ioPrim #-}
+ioPrim
+  :: BitVector 6         -- ARG[0]  pinType
+  -> Bit                 -- ARG[1]  pullup
+  -> Bit                 -- ARG[2]  negTrigger
+  -> String              -- ARG[3]  ioStandard
+  -> Signal domIn Bit    -- ARG[4]  latchInputValue
+  -> Signal domEn Bit    -- ARG[5]  clockEnable
+  -> Clock domIn         -- ARG[6]  inputClk
+  -> Clock domOut        -- ARG[7]  outputClk
+  -> Signal domOut Bit   -- ARG[8]  outputEnable
+  -> Signal domOut Bit   -- ARG[9]  dOut0
+  -> Signal domOut Bit   -- ARG[10] dOut1
+  -> ( Signal domPin Bit -- packagePin
+     , Signal domIn Bit  -- dIn0
+     , Signal domIn Bit  -- dIn1
+     )
+ioPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0)
+
 -- | Input pin configuration parameter
 data PinInput = PinInput -- ^ Simple Input pin dIn0
               | PinInputLatch -- ^ Disables Internal data changes on the physical input pin by latching the value
@@ -97,73 +168,3 @@ io pinInput pinOutput pullUp negTrigger ioStandard
       negTrigger
       (fromIOStandard ioStandard)
 
-{-# ANN ioPrim (InlinePrimitive [Verilog] $ unindent [i|
-  [  { "BlackBox" :
-       { "name" : "Ice40.IO.ioPrim"
-       , "kind" : "Declaration"
-       , "type" :
-  "ioPrim
-    :: BitVector 6         -- ARG[0]  pinType
-    -> Bit                 -- ARG[1]  pullup
-    -> Bit                 -- ARG[2]  negTrigger
-    -> String              -- ARG[3]  ioStandard
-    -> Signal domIn Bit    -- ARG[4]  latchInputValue
-    -> Signal domEn Bit    -- ARG[5]  clockEnable
-    -> Clock domIn         -- ARG[6]  inputClk
-    -> Clock domOut        -- ARG[7]  outputClk
-    -> Signal domOut Bit   -- ARG[8]  outputEnable
-    -> Signal domOut Bit   -- ARG[9]  dOut0
-    -> Signal domOut Bit   -- ARG[10] dOut1
-    -> ( Signal domPin Bit -- packagePin
-       , Signal domIn Bit  -- dIn0
-       , Signal domIn Bit  -- dIn1
-       )"
-       , "template" :
-  "//SB_IO begin
-  wire ~GENSYM[package_pin][0];
-  wire ~GENSYM[d_in_0][1];
-  wire ~GENSYM[d_in_1][2];
-
-  SB_IO #(
-    .PIN_TYPE         ( ~ARG[0]  ),
-    .PULLUP           ( ~ARG[1]  ),
-    .NEG_TRIGGER      ( ~ARG[2]  ),
-    .IO_STANDARD      ( ~ARG[3]  )
-  ) ~GENSYM[sb_io_inst][3] (
-    .PACKAGE_PIN      ( ~SYM[0]  ),
-    .LATCH_INPUT_VALUE( ~ARG[4]  ),
-    .CLOCK_ENABLE     ( ~ARG[5]  ),
-    .INPUT_CLK        ( ~ARG[6]  ),
-    .OUTPUT_CLK       ( ~ARG[7]  ),
-    .OUTPUT_ENABLE    ( ~ARG[8]  ),
-    .D_OUT_0          ( ~ARG[9]  ),
-    .D_OUT_1          ( ~ARG[10] ),
-    .D_IN_0           ( ~SYM[1]  ),
-    .D_IN_1           ( ~SYM[2]  )
-  );
-
-  assign ~RESULT = { ~SYM[0], ~SYM[1], ~SYM[2] };
-  //SB_IO end"
-       }
-     }
-  ]
-  |]) #-}
-
-{-# NOINLINE ioPrim #-}
-ioPrim
-  :: BitVector 6         -- ARG[0]  pinType
-  -> Bit                 -- ARG[1]  pullup
-  -> Bit                 -- ARG[2]  negTrigger
-  -> String              -- ARG[3]  ioStandard
-  -> Signal domIn Bit    -- ARG[4]  latchInputValue
-  -> Signal domEn Bit    -- ARG[5]  clockEnable
-  -> Clock domIn         -- ARG[6]  inputClk
-  -> Clock domOut        -- ARG[7]  outputClk
-  -> Signal domOut Bit   -- ARG[8]  outputEnable
-  -> Signal domOut Bit   -- ARG[9]  dOut0
-  -> Signal domOut Bit   -- ARG[10] dOut1
-  -> ( Signal domPin Bit -- packagePin
-     , Signal domIn Bit  -- dIn0
-     , Signal domIn Bit  -- dIn1
-     )
-ioPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0)
