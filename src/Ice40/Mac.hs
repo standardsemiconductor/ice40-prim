@@ -126,52 +126,52 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# NOINLINE macPrim #-}
 macPrim
-  :: Bit                         -- ARG[0]  negTrigger
-  -> Bit                         -- ARG[1]  aReg
-  -> Bit                         -- ARG[2]  bReg
-  -> Bit                         -- ARG[3]  cReg
-  -> Bit                         -- ARG[4]  dReg
-  -> Bit                         -- ARG[5]  top8x8MultReg
-  -> Bit                         -- ARG[6]  bot8x8MultReg
-  -> Bit                         -- ARG[7]  pipeline16x16MultReg1
-  -> Bit                         -- ARG[8]  pipeline16x16MultReg2
-  -> BitVector 2                 -- ARG[9]  topOutputSelect
-  -> BitVector 2                 -- ARG[10] topAddSubLowerInput
-  -> Bit                         -- ARG[11] topAddSubUpperInput
-  -> BitVector 2                 -- ARG[12] topAddSubCarrySelect
-  -> BitVector 2                 -- ARG[13] botOutputSelect
-  -> BitVector 2                 -- ARG[14] botAddSubLowerInput
-  -> Bit                         -- ARG[15] botAddSubUpperInput
-  -> BitVector 2                 -- ARG[16] botAddSubCarrySelect
-  -> Bit                         -- ARG[17] mode8x8
-  -> Bit                         -- ARG[18] aSigned
-  -> Bit                         -- ARG[19] bSigned
-  -> Clock dom                   -- ARG[20] clk
-  -> Signal dom Bit              -- ARG[21] ce
-  -> Signal dom (BitVector 16)   -- ARG[22] c
-  -> Signal dom (BitVector 16)   -- ARG[23] a
-  -> Signal dom (BitVector 16)   -- ARG[24] b
-  -> Signal dom (BitVector 16)   -- ARG[25] d
-  -> Signal dom Bit              -- ARG[26] irsttop
-  -> Signal dom Bit              -- ARG[27] irstbot
-  -> Signal dom Bit              -- ARG[28] orsttop
-  -> Signal dom Bit              -- ARG[29] orstbot
-  -> Signal dom Bit              -- ARG[30] ahold
-  -> Signal dom Bit              -- ARG[31] bhold
-  -> Signal dom Bit              -- ARG[32] chold
-  -> Signal dom Bit              -- ARG[33] dhold
-  -> Signal dom Bit              -- ARG[34] oholdtop
-  -> Signal dom Bit              -- ARG[35] oholdbot
-  -> Signal dom Bit              -- ARG[36] addsubtop
-  -> Signal dom Bit              -- ARG[37] addsubbot
-  -> Signal dom Bit              -- ARG[38] oloadtop
-  -> Signal dom Bit              -- ARG[39] oloadbot
-  -> Signal dom Bit              -- ARG[40] accumci
-  -> Signal dom Bit              -- ARG[41] signextin
-  -> Signal dom Bit              -- ARG[42] ci
+  :: Bit                         -- ^ negTrigger
+  -> Bit                         -- ^ aReg
+  -> Bit                         -- ^ bReg
+  -> Bit                         -- ^ cReg
+  -> Bit                         -- ^ dReg
+  -> Bit                         -- ^ top8x8MultReg
+  -> Bit                         -- ^ bot8x8MultReg
+  -> Bit                         -- ^ pipeline16x16MultReg1
+  -> Bit                         -- ^ pipeline16x16MultReg2
+  -> BitVector 2                 -- ^ topOutputSelect
+  -> BitVector 2                 -- ^ topAddSubLowerInput
+  -> Bit                         -- ^ topAddSubUpperInput
+  -> BitVector 2                 -- ^ topAddSubCarrySelect
+  -> BitVector 2                 -- ^ botOutputSelect
+  -> BitVector 2                 -- ^ botAddSubLowerInput
+  -> Bit                         -- ^ botAddSubUpperInput
+  -> BitVector 2                 -- ^ botAddSubCarrySelect
+  -> Bit                         -- ^ mode8x8
+  -> Bit                         -- ^ aSigned
+  -> Bit                         -- ^ bSigned
+  -> Clock dom                   -- ^ clk
+  -> Signal dom Bit              -- ^ ce
+  -> Signal dom (BitVector 16)   -- ^ c
+  -> Signal dom (BitVector 16)   -- ^ a
+  -> Signal dom (BitVector 16)   -- ^ b
+  -> Signal dom (BitVector 16)   -- ^ d
+  -> Signal dom Bit              -- ^ irsttop
+  -> Signal dom Bit              -- ^ irstbot
+  -> Signal dom Bit              -- ^ orsttop
+  -> Signal dom Bit              -- ^ orstbot
+  -> Signal dom Bit              -- ^ ahold
+  -> Signal dom Bit              -- ^ bhold
+  -> Signal dom Bit              -- ^ chold
+  -> Signal dom Bit              -- ^ dhold
+  -> Signal dom Bit              -- ^ oholdtop
+  -> Signal dom Bit              -- ^ oholdbot
+  -> Signal dom Bit              -- ^ addsubtop
+  -> Signal dom Bit              -- ^ addsubbot
+  -> Signal dom Bit              -- ^ oloadtop
+  -> Signal dom Bit              -- ^ oloadbot
+  -> Signal dom Bit              -- ^ accumci
+  -> Signal dom Bit              -- ^ signextin
+  -> Signal dom Bit              -- ^ ci
   -> ( Signal dom (BitVector 32) -- o[31:0]
      , Signal dom Bit            -- co
      , Signal dom Bit            -- accumco
      , Signal dom Bit            -- signextout
-     )
+     )                           -- ^ (o[31:0], co, accumco, signextout)
 macPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (0, 0, 0, 0)
