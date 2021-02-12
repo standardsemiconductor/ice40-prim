@@ -1,4 +1,18 @@
-module Ice40.IO where
+{-|
+Module      : Ice40.IO
+Description : Ice40 IO hard IP primitives
+Copyright   : (c) David Cox, 2021
+License     : BSD 3-Clause
+Maintainer  : standardsemiconductor@gmail.com
+
+IO hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
+module Ice40.IO
+  ( io
+  , PinOutput(..)
+  , PinInput(..)
+  , IOStandard(..)
+  ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -76,12 +90,14 @@ ioPrim
      )
 ioPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0)
 
-data PinInput = PinInput -- Simple Input pin dIn0
-              | PinInputLatch -- Disables Internal data changes on the physical input pin by latching the value
-              | PinInputRegistered -- Input data is registered in input cell
-              | PinInputRegisteredLatch -- Disables internal data changes on the physical input pin by latching the value on the input register
-              | PinInputDDR -- Input DDR data is clocked out on rising and falling clock edges. Use the dIn0 and dIn1 pins for DDR operation
-  deriving (Generic, Show, Read, Eq)
+-- | Input pin configuration parameter
+data PinInput = PinInput -- ^ Simple Input pin dIn0
+              | PinInputLatch -- ^ Disables Internal data changes on the physical input pin by latching the value
+              | PinInputRegistered -- ^ Input data is registered in input cell
+              | PinInputRegisteredLatch -- ^ Disables internal data changes on the physical input pin by latching the value on the input register
+              | PinInputDDR -- ^ Input DDR data is clocked out on rising and falling clock edges. Use the dIn0 and dIn1 pins for DDR operation
+  deriving stock (Generic, Show, Read, Eq)
+  deriving anyclass NFDataX
 
 fromPinInput :: PinInput -> BitVector 2
 fromPinInput = \case
@@ -91,20 +107,22 @@ fromPinInput = \case
   PinInputRegisteredLatch -> 0b10
   PinInputDDR             -> 0b00
 
-data PinOutput = PinNoOutput -- Disables the output function
-               | PinOutput -- Simple output pin (no enable)
-               | PinOutputTristate -- The output pin may be tristated using the enable
-               | PinOutputEnableRegistered -- The output pin may be tristated using a registered enable signal
-               | PinOutputRegistered -- Output registered (no enable)
-               | PinOutputRegisteredEnable -- Output registered with enable (the enable is not registered)
-               | PinOutputRegisteredEnableRegistered -- Output registered and enable registered
-               | PinOutputDDR -- Output DDR data is clocked out on rising and falling clock edges
-               | PinOutputDDREnable -- Output data is clocked out on rising and falling clock edges
-               | PinOutputDDREnableRegistered -- Output DDR data with registered enable signal
-               | PinOutputRegisteredInverted -- Output registered signal is inverted
-               | PinOutputRegisteredEnableInverted -- Output signal is registered and inverted (no enable function)
-               | PinOutputRegisteredEnableRegisteredInverted -- Output signal is registered and inverted, the enable/tristate control is registered
-  deriving (Generic, Show, Read, Eq)
+-- | Output pin configuration parameter
+data PinOutput = PinNoOutput -- ^Disables the output function
+               | PinOutput -- ^ Simple output pin (no enable)
+               | PinOutputTristate -- ^ The output pin may be tristated using the enable
+               | PinOutputEnableRegistered -- ^ The output pin may be tristated using a registered enable signal
+               | PinOutputRegistered -- ^ Output registered (no enable)
+               | PinOutputRegisteredEnable -- ^ Output registered with enable (the enable is not registered)
+               | PinOutputRegisteredEnableRegistered -- ^ Output registered and enable registered
+               | PinOutputDDR -- ^ Output DDR data is clocked out on rising and falling clock edges
+               | PinOutputDDREnable -- ^ Output data is clocked out on rising and falling clock edges
+               | PinOutputDDREnableRegistered -- ^ Output DDR data with registered enable signal
+               | PinOutputRegisteredInverted -- ^ Output registered signal is inverted
+               | PinOutputRegisteredEnableInverted -- ^ Output signal is registered and inverted (no enable function)
+               | PinOutputRegisteredEnableRegisteredInverted -- ^ Output signal is registered and inverted, the enable/tristate control is registered
+  deriving stock (Generic, Show, Read, Eq)
+  deriving anyclass NFDataX
 
 fromPinOutput :: PinOutput -> BitVector 4
 fromPinOutput = \case
@@ -134,16 +152,16 @@ fromIOStandard = \case
 io
   :: PinInput
   -> PinOutput
-  -> Bit                 -- pullUp
-  -> Bit                 -- negTrigger
+  -> Bit                 -- ^ pullUp
+  -> Bit                 -- ^ negTrigger
   -> IOStandard
-  -> Signal domIn Bit    -- latchInputValue
-  -> Signal domEn Bit    -- clockEnable
-  -> Clock domIn         -- inputClk
-  -> Clock domOut        -- outputClk
-  -> Signal domOut Bit   -- outputEnable
-  -> Signal domOut Bit   -- dOut0
-  -> Signal domOut Bit   -- dOut1
+  -> Signal domIn Bit    -- ^ latchInputValue
+  -> Signal domEn Bit    -- ^ clockEnable
+  -> Clock domIn         -- ^ inputClk
+  -> Clock domOut        -- ^ outputClk
+  -> Signal domOut Bit   -- ^ outputEnable
+  -> Signal domOut Bit   -- ^ dOut0
+  -> Signal domOut Bit   -- ^ dOut1
   -> ( Signal domPin Bit -- packagePin
      , Signal domIn Bit  -- dIn0
      , Signal domIn Bit  -- dIn1

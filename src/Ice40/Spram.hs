@@ -1,4 +1,13 @@
-module Ice40.Spram where
+{-|
+Module      : Ice40.Spram
+Description : Ice40 single-port RAM hard IP primitive
+Copyright   : (c) David Cox, 2021
+License     : BSD 3-Clause
+Maintainer  : standardsemiconductor@gmail.com
+
+SPRAM hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
+module Ice40.Spram ( spramPrim ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -47,16 +56,16 @@ data Nyb = Nyb3 | Nyb2 | Nyb1 | Nyb0
 {-# NOINLINE spramPrim #-}
 spramPrim
   :: KnownDomain dom            -- ARG[0] 
-  => Clock dom                  -- ARG[1]  clock
-  -> Signal dom (BitVector 14)  -- ARG[2]  address
-  -> Signal dom (BitVector 16)  -- ARG[3]  dataIn
-  -> Signal dom (BitVector 4)   -- ARG[4]  maskWrEn
-  -> Signal dom Bit             -- ARG[5]  wrEN
-  -> Signal dom Bit             -- ARG[6]  chipSelect
-  -> Signal dom Bit             -- ARG[7]  standBy
-  -> Signal dom Bit             -- ARG[8]  sleep
-  -> Signal dom Bit             -- ARG[9] powerOff
-  -> Signal dom (BitVector 16)  -- dataOut"
+  => Clock dom                  -- ^ clock
+  -> Signal dom (BitVector 14)  -- ^ address
+  -> Signal dom (BitVector 16)  -- ^ dataIn
+  -> Signal dom (BitVector 4)   -- ^ maskWrEn
+  -> Signal dom Bit             -- ^ wrEN
+  -> Signal dom Bit             -- ^ chipSelect
+  -> Signal dom Bit             -- ^ standBy
+  -> Signal dom Bit             -- ^ sleep
+  -> Signal dom Bit             -- ^ powerOff
+  -> Signal dom (BitVector 16)  -- ^ dataOut
 spramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
   = concat4 <$> nyb3 <*> nyb2 <*> nyb1 <*> nyb0
   where

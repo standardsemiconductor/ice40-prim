@@ -1,3 +1,12 @@
+{-|
+Module      : Ice40.Spi
+Description : Ice40 SPI hard IP primitive
+Copyright   : (c) David Cox, 2021
+License     : BSD 3-Clause
+Maintainer  : standardsemiconductor@gmail.com
+
+SPI hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
 module Ice40.Spi
   ( spi
   , Spi
@@ -233,6 +242,7 @@ spiPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0     -- bcsnoe
                     )
 
+-- | spi output record
 data Spi = Spi
   { sbdato  :: BitVector 8
   , sbacko  :: Bool       
@@ -248,6 +258,7 @@ data Spi = Spi
   , bcsnoe  :: BitVector 4
   }
 
+-- | spi primitive wrapper
 spi
   :: HiddenClock dom
   => String                   -- ^ busAddr
