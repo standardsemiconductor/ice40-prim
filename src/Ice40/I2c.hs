@@ -185,6 +185,7 @@ data I2c = I2c
   deriving stock (Generic, Show, Eq)
   deriving anyclass NFDataX
 
+{-# NOINLINE i2c #-}
 i2c
   :: HiddenClock dom
   => String                   -- ^ initAddr
