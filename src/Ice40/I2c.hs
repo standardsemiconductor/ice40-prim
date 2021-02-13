@@ -1,15 +1,4 @@
-module Ice40.I2c
-  ( i2c
-  , I2c
-  , sbdato
-  , sbacko
-  , i2cirq
-  , i2cwkup
-  , sclo
-  , scloe
-  , sdao
-  , sdaoe
-  ) where
+module Ice40.I2c where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
