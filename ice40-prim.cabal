@@ -25,7 +25,7 @@ library
                          Ice40.Spram,
                          Ice40.Rgb,
                          Ice40.Spi,
---                         Ice40.Spi.Prim,
+                         Ice40.Spi.Prim,
                          Ice40.I2c,
                          Ice40.IO
         hs-source-dirs: src

@@ -10,9 +10,10 @@ SPI hard IP primitive from Lattice Ice Technology Library https://github.com/sta
 module Ice40.Spi ( spi ) where
 
 import Clash.Prelude
-import Clash.Annotations.Primitive
-import Data.String.Interpolate (i)
-import Data.String.Interpolate.Util (unindent)
+import Ice40.Spi.Prim
+--import Clash.Annotations.Primitive
+--import Data.String.Interpolate (i)
+--import Data.String.Interpolate.Util (unindent)
 
 -- | spi primitive wrapper
 spi
@@ -68,7 +69,7 @@ spi busAddr sbrwi sbstbi sbadri sbdati bi wi wcki wcsni =
 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
 bitAt n = fmap (!n)
-
+{-
 {-# ANN spiPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
        { "name" : "Ice40.Spi.spiPrim"
@@ -282,3 +283,4 @@ spiPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0     -- bcsnoe
                     )
 
+-}
