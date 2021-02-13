@@ -10,7 +10,6 @@ SPI hard IP primitive from Lattice Ice Technology Library https://github.com/sta
 module Ice40.Spi ( spi ) where
 
 import Clash.Prelude
---import Ice40.Spi.Prim
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
@@ -40,7 +39,7 @@ spi
        , Bit         -- wckoe
        , BitVector 4 -- bcsno
        , BitVector 4 -- bcsnoe
-       )
+       ) -- ^ (sbdato, sbacko, spiirq, spiwkup, wo, woe, bo, boe, wcko, wckoe, bcsno, bcsnoe)
 spi busAddr sbrwi sbstbi sbadri sbdati bi wi wcki wcsni =
   spiPrim busAddr
           hasClock
