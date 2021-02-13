@@ -1,5 +1,6 @@
 # ice40-prim
 ![Haskell CI](https://github.com/standardsemiconductor/ice40-prim/workflows/Haskell%20CI/badge.svg)
+
 Lattice iCE40 Primitive IP
 ## Supported IP Modules
 * [Ice40.Spram](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Spram.hs) - For more information see the [iCE40 SPRAM Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/FPGA-TN-02022-1-2-iCE40-SPRAM-Usage-Guide.pdf)
