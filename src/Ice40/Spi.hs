@@ -61,6 +61,7 @@ mkSpi (sbdato', sbacko', spiirq', spiwkup', wo', woe', bo', boe', wcko', wckoe',
       <*> bcsnoe'
                     
 -- | spi primitive wrapper
+{-# NOINLINE spi #-}
 spi
   :: HiddenClock dom
   => String                   -- ^ busAddr
