@@ -1,4 +1,13 @@
-module Ice40.I2c where
+{-|
+Module      : Ice40.I2c
+Description : Ice40 I2C hard IP primitive
+Copyright   : (c) David Cox, 2021
+License     : BSD 3-Clause
+Maintainer  : standardsemiconductor@gmail.com
+
+I2C hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+-}
+module Ice40.I2c ( i2c ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -172,6 +181,7 @@ i2cPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0
                     )
 
+-- | I2C primitive wrapper
 i2c
   :: HiddenClock dom
   => String                   -- ^ initAddr
@@ -191,7 +201,7 @@ i2c
        , Bit         -- scloe
        , Bit         -- sdao
        , Bit         -- sdaoe
-       )
+       ) -- ^ (sbdato, sbacko, i2cirq, i2cwkup, sclo, scloe, sdao, sdaoe)
 i2c initAddr busAddr sbrwi sbstbi sbadri sbdati scli sdai =
   i2cPrim initAddr
           busAddr

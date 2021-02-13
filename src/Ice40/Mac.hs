@@ -7,7 +7,7 @@ Maintainer  : standardsemiconductor@gmail.com
 
 Mac hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
 -}
-module Ice40.Mac where
+module Ice40.Mac ( macPrim ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -133,6 +133,7 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+-- | Multiply-Accumulate primitive
 {-# NOINLINE macPrim #-}
 macPrim
   :: Bit                         -- ^ negTrigger

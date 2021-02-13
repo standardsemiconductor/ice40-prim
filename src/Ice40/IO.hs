@@ -7,7 +7,12 @@ Maintainer  : standardsemiconductor@gmail.com
 
 IO hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
 -}
-module Ice40.IO where
+module Ice40.IO
+  ( io
+  , PinInput(..)
+  , PinOutput(..)
+  , IOStandard(..)
+  ) where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
@@ -135,6 +140,7 @@ fromPinOutput = \case
   PinOutputRegisteredEnableInverted           -> 0b1011
   PinOutputRegisteredEnableRegisteredInverted -> 0b1111
 
+-- | Input-Output Standards
 data IOStandard = SBLVCMOS
                 | SBLVDSINPUT
   deriving (Generic, Show, Read, Eq)
@@ -144,6 +150,7 @@ fromIOStandard = \case
   SBLVCMOS    -> "SB_LVCMOS"
   SBLVDSINPUT -> "SB_LVDS_INPUT"
 
+-- | IO primitive
 io
   :: PinInput
   -> PinOutput
@@ -160,7 +167,7 @@ io
   -> ( Signal domPin Bit -- packagePin
      , Signal domIn Bit  -- dIn0
      , Signal domIn Bit  -- dIn1
-     )
+     ) -- ^ (packagePin, dIn0, dIn1)
 io pinInput pinOutput pullUp negTrigger ioStandard
   = ioPrim
       (fromPinOutput pinOutput ++# fromPinInput pinInput)

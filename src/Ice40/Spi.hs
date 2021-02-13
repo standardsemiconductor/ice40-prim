@@ -8,23 +8,7 @@ Maintainer  : standardsemiconductor@gmail.com
 SPI hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
 -}
 module Ice40.Spi ( spi ) where
-{-
-  ( spi
-  , Spi
-  , sbdato
-  , sbacko
-  , spiirq
-  , spiwkup
-  , wo
-  , woe
-  , bo
-  , boe
-  , wcko
-  , wckoe
-  , bcsno
-  , bcsnoe
-  ) where
--}
+
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
@@ -55,7 +39,7 @@ spi
        , Bit         -- wckoe
        , BitVector 4 -- bcsno
        , BitVector 4 -- bcsnoe
-       )  
+       ) 
 spi busAddr sbrwi sbstbi sbadri sbdati bi wi wcki wcsni =
   spiPrim busAddr
           hasClock
