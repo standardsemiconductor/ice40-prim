@@ -7,13 +7,14 @@ Maintainer  : standardsemiconductor@gmail.com
 
 IO hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
 -}
-module Ice40.IO
+module Ice40.IO where
+{-
   ( io
   , PinInput(..)
   , PinOutput(..)
   , IOStandard(..)
   ) where
-
+-}
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
