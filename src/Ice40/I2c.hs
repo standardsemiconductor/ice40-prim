@@ -172,20 +172,6 @@ i2cPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_
                     , 0
                     )
 
-data I2c = I2c
-  { sbdato  :: BitVector 8
-  , sbacko  :: Bool
-  , i2cirq  :: Bit
-  , i2cwkup :: Bit
-  , sclo    :: Bit
-  , scloe   :: Bit
-  , sdao    :: Bit
-  , sdaoe   :: Bit
-  }
-  deriving stock (Generic, Show, Eq)
-  deriving anyclass NFDataX
-
-{-# NOINLINE i2c #-}
 i2c
   :: HiddenClock dom
   => String                   -- ^ initAddr
@@ -196,41 +182,40 @@ i2c
   -> Signal dom (BitVector 8) -- ^ sbdati
   -> Signal dom Bit           -- ^ scli
   -> Signal dom Bit           -- ^ sdai
-  -> Signal dom I2c
+  -> Unbundled dom
+       ( BitVector 8 -- sbdato
+       , Bool        -- sbacko
+       , Bit         -- i2cirq
+       , Bit         -- i2cwkup
+       , Bit         -- sclo
+       , Bit         -- scloe
+       , Bit         -- sdao
+       , Bit         -- sdaoe
+       )
 i2c initAddr busAddr sbrwi sbstbi sbadri sbdati scli sdai =
-  I2c <$> sbdato'
-      <*> sbacko'
-      <*> i2cirq'
-      <*> i2cwkup'
-      <*> sclo'
-      <*> scloe'
-      <*> sdao'
-      <*> sdaoe'
-  where
-    (sbdato', sbacko', i2cirq', i2cwkup', sclo', scloe', sdao', sdaoe') =
-      i2cPrim initAddr
-              busAddr
-              hasClock
-              sbrwi
-              sbstbi
-              (bitAt 7 sbadri)
-              (bitAt 6 sbadri)
-              (bitAt 5 sbadri)
-              (bitAt 4 sbadri)
-              (bitAt 3 sbadri)
-              (bitAt 2 sbadri)
-              (bitAt 1 sbadri)
-              (bitAt 0 sbadri)
-              (bitAt 7 sbdati)
-              (bitAt 6 sbdati)
-              (bitAt 5 sbdati)
-              (bitAt 4 sbdati)
-              (bitAt 3 sbdati)
-              (bitAt 2 sbdati)
-              (bitAt 1 sbdati)
-              (bitAt 0 sbdati)
-              scli
-              sdai
+  i2cPrim initAddr
+          busAddr
+          hasClock
+          sbrwi
+          sbstbi
+          (bitAt 7 sbadri)
+          (bitAt 6 sbadri)
+          (bitAt 5 sbadri)
+          (bitAt 4 sbadri)
+          (bitAt 3 sbadri)
+          (bitAt 2 sbadri)
+          (bitAt 1 sbadri)
+          (bitAt 0 sbadri)
+          (bitAt 7 sbdati)
+          (bitAt 6 sbdati)
+          (bitAt 5 sbdati)
+          (bitAt 4 sbdati)
+          (bitAt 3 sbdati)
+          (bitAt 2 sbdati)
+          (bitAt 1 sbdati)
+          (bitAt 0 sbdati)
+          scli
+          sdai
 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
 bitAt n = fmap (!n)
