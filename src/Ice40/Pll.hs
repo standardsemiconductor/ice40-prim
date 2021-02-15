@@ -64,7 +64,9 @@ import Data.String.Interpolate.Util (unindent)
     .FDA_RELATIVE                   ( ~ARG[4] ),
     .SHIFTREG_DIV_MODE              ( ~ARG[5] ),
     .PLLOUT_SELECT                  ( ~ARG[6] ),
-    .DIVR                           ( ~ARG[7] )
+    .DIVR                           ( ~ARG[7] ),
+    .DIVF                           ( ~ARG[8] ),
+    .DIVQ                           ( ~ARG[9] )
   ) ~GENSYM[sb_spi_inst][3] (
     .REFERENCECLK    ( ~ARG[8]  ),
     .RESETB          ( ~ARG[9]  ),
