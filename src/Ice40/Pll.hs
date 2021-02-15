@@ -19,7 +19,11 @@ import Data.String.Interpolate.Util (unindent)
        , "kind" : "Declaration"
        , "type" :
   "pllPrim
-    :: String          -- ARG[0]  busAddr
+    :: String          -- ARG[0]  feedbackpath
+    -> String          -- ARG[1]  delayAdjustmentModeFeedback
+    -> BitVector 4     -- ARG[2]  fdaFeedback
+    -> String          -- ARG[3]  delayAdjustmentModeRelative
+    -> BitVector 4     -- ARG[4]  fdaRelative
     -> Clock dom       -- ARG[1]  referenceClk
     -> Signal dom Bool -- ARG[2]  sbrwi
     -> Signal dom Bool -- ARG[3]  sbstbi
@@ -32,17 +36,6 @@ import Data.String.Interpolate.Util (unindent)
     -> Signal dom Bit  -- ARG[10] sbadri1
     -> Signal dom Bit  -- ARG[11] sbadri0
     -> Signal dom Bit  -- ARG[12] sbdati7
-    -> Signal dom Bit  -- ARG[13] sbdati6
-    -> Signal dom Bit  -- ARG[14] sbdati5
-    -> Signal dom Bit  -- ARG[15] sbdati4
-    -> Signal dom Bit  -- ARG[16] sbdati3
-    -> Signal dom Bit  -- ARG[17] sbdati2
-    -> Signal dom Bit  -- ARG[18] sbdati1
-    -> Signal dom Bit  -- ARG[19] sbdati0
-    -> Signal dom Bit  -- ARG[20] bi
-    -> Signal dom Bit  -- ARG[21] wi
-    -> Signal dom Bit  -- ARG[22] wcki
-    -> Signal dom Bit  -- ARG[23] wcsni
     -> Unbundled dom 
          ( BitVector 8 -- sbdato
          , Bool        -- sbacko
