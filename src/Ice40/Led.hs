@@ -105,6 +105,30 @@ ledPrim
 ledPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0, pure False)
 
 -- | SB_LEDDA_IP primitive generates the RGB PWM outputs for the RGB LED drivers. The IP contains registers that are programmed in byte the SCI bus interface signals.
+-- 
+-- LED Control Bus Addressable Registers
+--
+-- +---------------+----------+-------------------------------------------+--------+
+-- | LEDD_ADR[3:0] | Name     | Usage                                     | Access |
+-- +===============+==========+===========================================+========+
+-- | 1000          | LEDDCR0  | LED Driver Control Register 0             | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 1001          | LEDDBR   | LED Driver Pre-scale Register             | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 1010          | LEDDONR  | LED Driver ON Time Register               | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 1011          | LEDDOFR  | LED Driver OFF Time Register              | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 0101          | LEDDBCRR | LED Driver Breathe On Control Register    | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 0110          | LEDDBCFR | LED Driver Breate Off Control Register    | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 0001          | LEDDPWRR | LED Driver Pulse Width Register for RED   | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 0010          | LEDDPWRG | LED Driver Pulse Width Register for GREEN | W      |
+-- +---------------+----------+-------------------------------------------+--------+
+-- | 0011          | LEDDPWRB | LED Driver Pulse Width Register for BLUE  | W      |
+-- +---------------+----------+-------------------------------------------+--------+
 led
   :: HiddenClock dom
   => Signal dom Bit           -- ^ cs - CS to write LEDD IP registers
@@ -136,5 +160,6 @@ led cs dat addr en exe = (pwmOut0, pwmOut1, pwmOut2, on)
                                               en
                                               exe
 
+ 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
 bitAt n = fmap (!n)
