@@ -21,6 +21,7 @@ library
         exposed-modules: Ice40.Clock,
                          Ice40.Led,
                          Ice40.Mac,
+                         Ice40.Mac.Prim,
                          Ice40.Osc,
                          Ice40.Spram,
                          Ice40.Rgb,
