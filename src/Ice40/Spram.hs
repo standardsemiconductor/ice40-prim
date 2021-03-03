@@ -5,7 +5,7 @@ Copyright   : (c) David Cox, 2021
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
-SPRAM hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+SPRAM hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf)
 -}
 module Ice40.Spram ( spramPrim ) where
 
