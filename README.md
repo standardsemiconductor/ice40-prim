@@ -1,5 +1,7 @@
 # ice40-prim
 ![Haskell CI](https://github.com/standardsemiconductor/ice40-prim/workflows/Haskell%20CI/badge.svg)
+[![Hackage][hackage-badge]][hackage]
+[![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 
 Lattice iCE40 Primitive IP
 ## Supported IP Modules
@@ -72,3 +74,8 @@ Lattice iCE40 Primitive IP
 [iCE40 SPRAM Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/FPGA-TN-02022-1-2-iCE40-SPRAM-Usage-Guide.pdf)
 
 [DSP Function Usage Guide PDF](https://github.com/standardsemiconductor/VELDT-info/blob/master/DSPFunctionUsageGuideforICE40Devices.pdf)
+
+[hackage]:            <https://hackage.haskell.org/package/ice40-prim>
+[hackage-badge]:      <https://img.shields.io/hackage/v/ice40-prim.svg?color=success>
+[hackage-deps-badge]: <https://img.shields.io/hackage-deps/v/ice40-prim.svg>
+[hackage-deps]:       <http://packdeps.haskellers.com/feed?needle=ice40-prim>
