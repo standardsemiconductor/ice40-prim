@@ -5,7 +5,7 @@ Copyright : (c) David Cox, 2021
 License : BSD-3-Clause
 Maintainer : standardsemiconductor@gmail.com
 
-MAC primitive wrapper. See `Ice40.Mac.Prim` for the original primitive.
+MAC primitive wrapper. See "Ice40.Mac.Prim" for the original primitive.
 -}
 module Ice40.Mac 
   ( mac
@@ -21,24 +21,24 @@ import Ice40.Mac.Prim
 -- | MAC inputs
 data Input dom = Input
   { ce        :: Signal dom Bit -- ^ clock enable input. applies to all clocked elemets, default = 1
-  , c         :: Signal dom (BitVector 16) -- ^ 16-bits data of input c
-  , a         :: Signal dom (BitVector 16) -- ^ 16-bits data of input a
-  , b         :: Signal dom (BitVector 16) -- ^ 16-bits data of input b
-  , d         :: Signal dom (BitVector 16) -- ^ 16-bits data of input d
-  , irsttop   :: Signal dom Bit -- ^ reset input to registers A and C. Also reset upper 8x8 multiplier output register (8x8 MAC pipeline register) 0 = not reset, 1 = reset, default = 0
-  , irstbot   :: Signal dom Bit -- ^ rest input to registers B and D. Also reset lower 8x8 multiplier output register (8x8 MAC pipeline register) and the 16x16 multiplier output register (16x16 MAC pipeline register) 0 = not reset, 1 = reset, default = 0
-  , orsttop   :: Signal dom Bit -- ^ reset input to top accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset, 1 = reset, default = 0
-  , orstbot   :: Signal dom Bit -- ^ reset input to bottom accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset, 1 = rest, default = 0
-  , ahold     :: Signal dom Bit -- ^ register A hold input. Control data flow input register A. 0 = load, 1 = hold, default = 0
-  , bhold     :: Signal dom Bit -- ^ register B hold input. Control data flow input register B. 0 = load, 1 = hold, default = 0
-  , chold     :: Signal dom Bit -- ^ register C hold input. Control data flow input register C. 0 = load, 1 = hold, default = 0
-  , dhold     :: Signal dom Bit -- ^ register D hold input. Control data flow input register D. 0 = load, 1 = hold, default = 0
-  , oholdtop  :: Signal dom Bit -- ^ top accumulator output register hold input. control data flow into the register. 0 = load, 1 = hold, default = 0
-  , oholdbot  :: Signal dom Bit -- ^ bottom accumulator output register hold input. control data flow into the register. 0 = load, 1 = hold, default = 0
-  , addsubtop :: Signal dom Bit -- ^ add/subtract control input to top accumulator. 0 = add, 1 = subtract, default = 0
-  , addsubbot :: Signal dom Bit -- ^ add/subtract control input to bottom accumulator. 0 = add, 1 = subtract, default = 0
-  , oloadtop  :: Signal dom Bit -- ^ load control input to top accumulator register (initialize on MAC function). 0 = not load, 1 = load data from register/input C, default = 0
-  , oloadbot  :: Signal dom Bit -- ^ load control input to bottom accumulator register (initialize on MAC function). 0 = not load, 1 = load data from register/input D, default = 0
+  , c         :: Signal dom (BitVector 16) -- ^ 16-bits data of input c, default = 0
+  , a         :: Signal dom (BitVector 16) -- ^ 16-bits data of input a, default = 0
+  , b         :: Signal dom (BitVector 16) -- ^ 16-bits data of input b, default = 0
+  , d         :: Signal dom (BitVector 16) -- ^ 16-bits data of input d, default = 0
+  , irsttop   :: Signal dom Bit -- ^ reset input to registers A and C. Also reset upper 8x8 multiplier output register (8x8 MAC pipeline register) 0 = not reset (default), 1 = reset
+  , irstbot   :: Signal dom Bit -- ^ reset input to registers B and D. Also reset lower 8x8 multiplier output register (8x8 MAC pipeline register) and the 16x16 multiplier output register (16x16 MAC pipeline register). 0 = not reset (default), 1 = reset
+  , orsttop   :: Signal dom Bit -- ^ reset input to top accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset (default), 1 = reset
+  , orstbot   :: Signal dom Bit -- ^ reset input to bottom accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset (default), 1 = rest
+  , ahold     :: Signal dom Bit -- ^ register A hold input. Control data flow input register A. 0 = load (default), 1 = hold
+  , bhold     :: Signal dom Bit -- ^ register B hold input. Control data flow input register B. 0 = load (default), 1 = hold
+  , chold     :: Signal dom Bit -- ^ register C hold input. Control data flow input register C. 0 = load (default), 1 = hold
+  , dhold     :: Signal dom Bit -- ^ register D hold input. Control data flow input register D. 0 = load (default), 1 = hold
+  , oholdtop  :: Signal dom Bit -- ^ top accumulator output register hold input. control data flow into the register. 0 = load (default), 1 = hold
+  , oholdbot  :: Signal dom Bit -- ^ bottom accumulator output register hold input. control data flow into the register. 0 = load (default), 1 = hold
+  , addsubtop :: Signal dom Bit -- ^ add/subtract control input to top accumulator. 0 = add (default), 1 = subtract
+  , addsubbot :: Signal dom Bit -- ^ add/subtract control input to bottom accumulator. 0 = add (default), 1 = subtract
+  , oloadtop  :: Signal dom Bit -- ^ load control input to top accumulator register (initialize on MAC function). 0 = not load (default), 1 = load data from register/input C
+  , oloadbot  :: Signal dom Bit -- ^ load control input to bottom accumulator register (initialize on MAC function). 0 = not load (default), 1 = load data from register/input D
   , accumci   :: Signal dom Bit -- ^ cascaded accumulator carry input from previous DSP block, default = 0
   , signextin :: Signal dom Bit -- ^ sign extension input from previous DSP block, default = 0
   , ci        :: Signal dom Bit -- ^ cascaded add/sub carry input from previous DSP block, default = 0
@@ -82,14 +82,14 @@ data Parameter = Parameter
   , bot8x8MultReg :: Bit -- ^ bottom 8x8 multiplier output register control (pipeline register for MAC). 0 = not registered (default), 1 = registered
   , pipeline16x16MultReg1 :: Bit -- ^ 16x16 multiplier pipeline register control. 0 = not registered (default), 1 = registered
   , pipeline16x16MultReg2 :: Bit -- ^ 16x16 multiplier output register control (pipeline register for MAC). 0 = not registered (default), 1 = registered
-  , topOutputSelect      :: BitVector 2 -- ^ top output select. 00 = adder/subtractor not registered (default), 01 = adder/subtractor registered, 10 = 8x8 multiplier, 11 = 16x16 multiplier
-  , topAddSubLowerInput  :: BitVector 2 -- ^ input X of upper adder/subtractor. 00 = input A (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from Z15 (lower adder/subtractor input)
-  , topAddSubUpperInput  :: Bit -- ^ input W of upper adder/subtractor. 0 = output of adder/subtractor register (accumulation function) (default), 1 = input C
-  , topAddSubCarrySelect :: BitVector 2 -- ^ carry input select top adder/subtractor, 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower adder/subtractor, 11 = cascade CO from lower adder/subtractor
-  , botOutputSelect      :: BitVector 2 -- ^ bottom output select. 00 = adder/subtractor not registered (default), 01 = adder/subtractor registered, 10 = 8x8 multiplier, 16x16 multiplier
-  , botAddSubLowerInput  :: BitVector 2 -- ^ input Z of upper adder/subtractor. 00 = input B (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from SIGNEXTIN
-  , botAddSubUpperInput  :: Bit -- ^ input Y of upper adder/subtractor. 0 = output of adder/subtractor output register (accumulation function) (default), 1 = input D
-  , botAddSubCarrySelect :: BitVector 2 -- ^ carry input select bottom adder/subtractor. 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower DSP block, 11 = cascade CO from lower DSP block
+  , topOutputSelect      :: BitVector 2 -- ^ top output select. 00 = adder-subtractor not registered (default), 01 = adder-subtractor registered, 10 = 8x8 multiplier, 11 = 16x16 multiplier
+  , topAddSubLowerInput  :: BitVector 2 -- ^ input X of upper adder-subtractor. 00 = input A (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from Z15 (lower adder-subtractor input)
+  , topAddSubUpperInput  :: Bit -- ^ input W of upper adder-subtractor. 0 = output of adder-subtractor register (accumulation function) (default), 1 = input C
+  , topAddSubCarrySelect :: BitVector 2 -- ^ carry input select top adder-subtractor, 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower adder-subtractor, 11 = cascade CO from lower adder-subtractor
+  , botOutputSelect      :: BitVector 2 -- ^ bottom output select. 00 = adder-subtractor not registered (default), 01 = adder-subtractor registered, 10 = 8x8 multiplier, 16x16 multiplier
+  , botAddSubLowerInput  :: BitVector 2 -- ^ input Z of upper adder-subtractor. 00 = input B (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from SIGNEXTIN
+  , botAddSubUpperInput  :: Bit -- ^ input Y of upper adder-subtractor. 0 = output of adder-subtractor output register (accumulation function) (default), 1 = input D
+  , botAddSubCarrySelect :: BitVector 2 -- ^ carry input select bottom adder-subtractor. 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower DSP block, 11 = cascade CO from lower DSP block
   , mode8x8 :: Bit -- ^ select 8x8 multiplier mode (power saving. 0 = not selected (default), 1 = selected
   , aSigned :: Bit -- ^ input A sign. 0 = input A is unsigned (default), 1 = input A is signed
   , bSigned :: Bit -- ^ input B sign. 0 = input B is unsigned (default), 1 = input B is signed
