@@ -1,10 +1,10 @@
 {-|
-Module      : Ice40.Pll
+Module      : Ice40.Pll.Core
 Description : Ice40 PLL hard IP primitive
 Copyright   : (c) David Cox, 2021
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
-PLL hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+PLL Core hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf)
 -}
 module Ice40.Pll ( pll ) where
 
@@ -15,7 +15,7 @@ import Data.String.Interpolate.Util (unindent)
 
 {-# ANN pllPrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Ice40.Pll.pllPrim"
+       { "name" : "Ice40.Pll.Core.pllPrim"
        , "kind" : "Declaration"
        , "type" :
   "pllPrim
