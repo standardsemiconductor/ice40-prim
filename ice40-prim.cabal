@@ -1,6 +1,6 @@
 cabal-version:       >=1.10
 name:                ice40-prim
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Lattice iCE40 Primitive IP
 description:         Clash primitives to instantiate Lattice Semiconductor's iCE40 FPGA hard IP
 bug-reports:         https://github.com/standardsemiconductor/ice40-prim/issues
@@ -23,6 +23,7 @@ library
                          Ice40.IO
                          Ice40.Led,
                          Ice40.Mac,
+                         Ice40.Mac.Prim,
                          Ice40.Osc,
                          Ice40.Pll.Core,
                          Ice40.Pll.Pad,

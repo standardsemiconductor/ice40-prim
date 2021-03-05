@@ -1,187 +1,177 @@
 {-|
-Module      : Ice40.Mac
-Description : Ice40 Multiply-Accumulate (DSP) hard IP primitive
-Copyright   : (c) David Cox, 2021
-License     : BSD 3-Clause
-Maintainer  : standardsemiconductor@gmail.com
+Module : Ice40.Mac
+Description : Ice40 Multiply-Accumulate primitive wrapper
+Copyright : (c) David Cox, 2021
+License : BSD-3-Clause
+Maintainer : standardsemiconductor@gmail.com
 
-Mac hard IP primitive from Lattice Ice Technology Library https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf
+MAC primitive wrapper. See "Ice40.Mac.Prim" for the original primitive.
 -}
-module Ice40.Mac ( macPrim ) where
+module Ice40.Mac 
+  ( mac
+  , Input(..)
+  , defaultInput
+  , Parameter(..)
+  , defaultParameter
+  ) where
 
 import Clash.Prelude
-import Clash.Annotations.Primitive
-import Data.String.Interpolate (i)
-import Data.String.Interpolate.Util (unindent)
+import Ice40.Mac.Prim
 
-{-# ANN macPrim (InlinePrimitive [Verilog] $ unindent [i|
-  [  { "BlackBox" :
-       { "name" : "Ice40.Mac.macPrim"
-       , "kind" : "Declaration"
-       , "type" :
-  "macPrim
-  :: Bit                         -- ARG[0]  negTrigger
-  -> Bit                         -- ARG[1]  aReg
-  -> Bit                         -- ARG[2]  bReg
-  -> Bit                         -- ARG[3]  cReg
-  -> Bit                         -- ARG[4]  dReg
-  -> Bit                         -- ARG[5]  top8x8MultReg
-  -> Bit                         -- ARG[6]  bot8x8MultReg
-  -> Bit                         -- ARG[7]  pipeline16x16MultReg1
-  -> Bit                         -- ARG[8]  pipeline16x16MultReg2
-  -> BitVector 2                 -- ARG[9]  topOutputSelect
-  -> BitVector 2                 -- ARG[10] topAddSubLowerInput
-  -> Bit                         -- ARG[11] topAddSubUpperInput
-  -> BitVector 2                 -- ARG[12] topAddSubCarrySelect
-  -> BitVector 2                 -- ARG[13] botOutputSelect
-  -> BitVector 2                 -- ARG[14] botAddSubLowerInput
-  -> Bit                         -- ARG[15] botAddSubUpperInput
-  -> BitVector 2                 -- ARG[16] botAddSubCarrySelect
-  -> Bit                         -- ARG[17] mode8x8
-  -> Bit                         -- ARG[18] aSigned
-  -> Bit                         -- ARG[19] bSigned
-  -> Clock dom                   -- ARG[20] clk
-  -> Signal dom Bit              -- ARG[21] ce
-  -> Signal dom (BitVector 16)   -- ARG[22] c
-  -> Signal dom (BitVector 16)   -- ARG[23] a
-  -> Signal dom (BitVector 16)   -- ARG[24] b
-  -> Signal dom (BitVector 16)   -- ARG[25] d
-  -> Signal dom Bit              -- ARG[26] irsttop
-  -> Signal dom Bit              -- ARG[27] irstbot
-  -> Signal dom Bit              -- ARG[28] orsttop
-  -> Signal dom Bit              -- ARG[29] orstbot
-  -> Signal dom Bit              -- ARG[30] ahold
-  -> Signal dom Bit              -- ARG[31] bhold
-  -> Signal dom Bit              -- ARG[32] chold
-  -> Signal dom Bit              -- ARG[33] dhold
-  -> Signal dom Bit              -- ARG[34] oholdtop
-  -> Signal dom Bit              -- ARG[35] oholdbot
-  -> Signal dom Bit              -- ARG[36] addsubtop
-  -> Signal dom Bit              -- ARG[37] addsubbot
-  -> Signal dom Bit              -- ARG[38] oloadtop
-  -> Signal dom Bit              -- ARG[39] oloadbot
-  -> Signal dom Bit              -- ARG[40] accumci
-  -> Signal dom Bit              -- ARG[41] signextin
-  -> Signal dom Bit              -- ARG[42] ci
-  -> ( Signal dom (BitVector 32) -- o[31:0]
-     , Signal dom Bit            -- co
-     , Signal dom Bit            -- accumco
-     , Signal dom Bit            -- signextout
-     )"
-       , "template" :
-  "//SB_MAC16 begin
-  wire [31:0]  ~GENSYM[o][0];
-  wire         ~GENSYM[co][1];
-  wire         ~GENSYM[accumco][2];
-  wire         ~GENSYM[signextout][3];
+-- | MAC inputs
+data Input dom = Input
+  { ce        :: Signal dom Bit -- ^ clock enable input. applies to all clocked elemets, default = 1
+  , c         :: Signal dom (BitVector 16) -- ^ 16-bits data of input c, default = 0
+  , a         :: Signal dom (BitVector 16) -- ^ 16-bits data of input a, default = 0
+  , b         :: Signal dom (BitVector 16) -- ^ 16-bits data of input b, default = 0
+  , d         :: Signal dom (BitVector 16) -- ^ 16-bits data of input d, default = 0
+  , irsttop   :: Signal dom Bit -- ^ reset input to registers A and C. Also reset upper 8x8 multiplier output register (8x8 MAC pipeline register) 0 = not reset (default), 1 = reset
+  , irstbot   :: Signal dom Bit -- ^ reset input to registers B and D. Also reset lower 8x8 multiplier output register (8x8 MAC pipeline register) and the 16x16 multiplier output register (16x16 MAC pipeline register). 0 = not reset (default), 1 = reset
+  , orsttop   :: Signal dom Bit -- ^ reset input to top accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset (default), 1 = reset
+  , orstbot   :: Signal dom Bit -- ^ reset input to bottom accumulator register (for adder/subtractor, accumulator, and MAC functions) 0 = not reset (default), 1 = rest
+  , ahold     :: Signal dom Bit -- ^ register A hold input. Control data flow input register A. 0 = load (default), 1 = hold
+  , bhold     :: Signal dom Bit -- ^ register B hold input. Control data flow input register B. 0 = load (default), 1 = hold
+  , chold     :: Signal dom Bit -- ^ register C hold input. Control data flow input register C. 0 = load (default), 1 = hold
+  , dhold     :: Signal dom Bit -- ^ register D hold input. Control data flow input register D. 0 = load (default), 1 = hold
+  , oholdtop  :: Signal dom Bit -- ^ top accumulator output register hold input. control data flow into the register. 0 = load (default), 1 = hold
+  , oholdbot  :: Signal dom Bit -- ^ bottom accumulator output register hold input. control data flow into the register. 0 = load (default), 1 = hold
+  , addsubtop :: Signal dom Bit -- ^ add/subtract control input to top accumulator. 0 = add (default), 1 = subtract
+  , addsubbot :: Signal dom Bit -- ^ add/subtract control input to bottom accumulator. 0 = add (default), 1 = subtract
+  , oloadtop  :: Signal dom Bit -- ^ load control input to top accumulator register (initialize on MAC function). 0 = not load (default), 1 = load data from register/input C
+  , oloadbot  :: Signal dom Bit -- ^ load control input to bottom accumulator register (initialize on MAC function). 0 = not load (default), 1 = load data from register/input D
+  , accumci   :: Signal dom Bit -- ^ cascaded accumulator carry input from previous DSP block, default = 0
+  , signextin :: Signal dom Bit -- ^ sign extension input from previous DSP block, default = 0
+  , ci        :: Signal dom Bit -- ^ cascaded add/sub carry input from previous DSP block, default = 0
+  }
 
-  SB_MAC16 #(
-    .NEG_TRIGGER(~ARG[0]),
-    .C_REG(~ARG[3]),
-    .A_REG(~ARG[1]),
-    .B_REG(~ARG[2]),
-    .D_REG(~ARG[4]),
-    .TOP_8x8_MULT_REG(~ARG[5]),
-    .BOT_8x8_MULT_REG(~ARG[6]),
-    .PIPELINE_16x16_MULT_REG1(~ARG[7]),
-    .PIPELINE_16x16_MULT_REG2(~ARG[8]),
-    .TOPOUTPUT_SELECT(~ARG[9]),
-    .TOPADDSUB_LOWERINPUT(~ARG[10]),
-    .TOPADDSUB_UPPERINPUT(~ARG[11]),
-    .TOPADDSUB_CARRYSELECT(~ARG[12]),
-    .BOTOUTPUT_SELECT(~ARG[13]),
-    .BOTADDSUB_LOWERINPUT(~ARG[14]),
-    .BOTADDSUB_UPPERINPUT(~ARG[15]),
-    .BOTADDSUB_CARRYSELECT(~ARG[16]),
-    .MODE_8x8(~ARG[17]),
-    .A_SIGNED(~ARG[18]),
-    .B_SIGNED(~ARG[19])
-  ) ~GENSYM[sb_mac16_inst][4] (
-    .CLK(~ARG[20]),
-    .CE(~ARG[21]),
-    .C(~ARG[22]),
-    .A(~ARG[23]),
-    .B(~ARG[24]),
-    .D(~ARG[25]),
-    .AHOLD(~ARG[30]),
-    .BHOLD(~ARG[31]),
-    .CHOLD(~ARG[32]),
-    .DHOLD(~ARG[33]),
-    .IRSTTOP(~ARG[26]),
-    .IRSTBOT(~ARG[27]),
-    .ORSTTOP(~ARG[28]),
-    .ORSTBOT(~ARG[29]),
-    .OLOADTOP(~ARG[38]),
-    .OLOADBOT(~ARG[39]),
-    .ADDSUBTOP(~ARG[36]),
-    .ADDSUBBOT(~ARG[37]),
-    .OHOLDTOP(~ARG[34]),
-    .OHOLDBOT(~ARG[35]),
-    .CI(~ARG[42]),
-    .ACCUMCI(~ARG[40]),
-    .SIGNEXTIN(~ARG[41]),
-    .O(~SYM[0]),
-    .CO(~SYM[1]),
-    .ACCUMCO(~SYM[2]),
-    .SIGNEXTOUT(~SYM[3])
-  );
+-- | default MAC inputs
+defaultInput :: Input dom
+defaultInput = Input
+  { ce        = 1
+  , c         = 0
+  , a         = 0
+  , b         = 0
+  , d         = 0
+  , irsttop   = 0
+  , irstbot   = 0
+  , orsttop   = 0
+  , orstbot   = 0
+  , ahold     = 0
+  , bhold     = 0
+  , chold     = 0
+  , dhold     = 0
+  , oholdtop  = 0
+  , oholdbot  = 0
+  , addsubtop = 0
+  , addsubbot = 0
+  , oloadtop  = 0
+  , oloadbot  = 0
+  , accumci   = 0
+  , signextin = 0
+  , ci        = 0
+  }
 
-  assign ~RESULT = { ~SYM[0], ~SYM[1], ~SYM[2], ~SYM[3] };
-  // SB_MAC16 end"
-       }
-     }
-  ]
-  |]) #-}
+-- | MAC parameters
+data Parameter = Parameter
+  { negTrigger :: Bit -- ^ input clock polarity, 0 = rising edge (default), 1 = falling edge
+  , aReg :: Bit -- ^ input A register control, 0 = not registered (default), 1 = registered
+  , bReg :: Bit -- ^ input B register control, 0 = not registered (default), 1 = registered
+  , cReg :: Bit -- ^ input C register control, 0 = not registered (default), 1 = registered
+  , dReg :: Bit -- ^ input D register control, 0 = not registered (default), 1 = registered
+  , top8x8MultReg :: Bit -- ^ top 8x8 multiplier output register control (pipeline register for MAC). 0 = not registered (default), 1 = registered
+  , bot8x8MultReg :: Bit -- ^ bottom 8x8 multiplier output register control (pipeline register for MAC). 0 = not registered (default), 1 = registered
+  , pipeline16x16MultReg1 :: Bit -- ^ 16x16 multiplier pipeline register control. 0 = not registered (default), 1 = registered
+  , pipeline16x16MultReg2 :: Bit -- ^ 16x16 multiplier output register control (pipeline register for MAC). 0 = not registered (default), 1 = registered
+  , topOutputSelect      :: BitVector 2 -- ^ top output select. 00 = adder-subtractor not registered (default), 01 = adder-subtractor registered, 10 = 8x8 multiplier, 11 = 16x16 multiplier
+  , topAddSubLowerInput  :: BitVector 2 -- ^ input X of upper adder-subtractor. 00 = input A (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from Z15 (lower adder-subtractor input)
+  , topAddSubUpperInput  :: Bit -- ^ input W of upper adder-subtractor. 0 = output of adder-subtractor register (accumulation function) (default), 1 = input C
+  , topAddSubCarrySelect :: BitVector 2 -- ^ carry input select top adder-subtractor, 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower adder-subtractor, 11 = cascade CO from lower adder-subtractor
+  , botOutputSelect      :: BitVector 2 -- ^ bottom output select. 00 = adder-subtractor not registered (default), 01 = adder-subtractor registered, 10 = 8x8 multiplier, 16x16 multiplier
+  , botAddSubLowerInput  :: BitVector 2 -- ^ input Z of upper adder-subtractor. 00 = input B (default), 01 = 8x8 multiplier output at top, 10 = 16x16 multiplier upper 16-bit outputs, 11 = sign extension from SIGNEXTIN
+  , botAddSubUpperInput  :: Bit -- ^ input Y of upper adder-subtractor. 0 = output of adder-subtractor output register (accumulation function) (default), 1 = input D
+  , botAddSubCarrySelect :: BitVector 2 -- ^ carry input select bottom adder-subtractor. 00 = constant 0 (default), 01 = constant 1, 10 = cascade ACCUMOUT from lower DSP block, 11 = cascade CO from lower DSP block
+  , mode8x8 :: Bit -- ^ select 8x8 multiplier mode (power saving. 0 = not selected (default), 1 = selected
+  , aSigned :: Bit -- ^ input A sign. 0 = input A is unsigned (default), 1 = input A is signed
+  , bSigned :: Bit -- ^ input B sign. 0 = input B is unsigned (default), 1 = input B is signed
+  }
 
--- | Multiply-Accumulate primitive
-{-# NOINLINE macPrim #-}
-macPrim
-  :: Bit                         -- ^ negTrigger
-  -> Bit                         -- ^ aReg
-  -> Bit                         -- ^ bReg
-  -> Bit                         -- ^ cReg
-  -> Bit                         -- ^ dReg
-  -> Bit                         -- ^ top8x8MultReg
-  -> Bit                         -- ^ bot8x8MultReg
-  -> Bit                         -- ^ pipeline16x16MultReg1
-  -> Bit                         -- ^ pipeline16x16MultReg2
-  -> BitVector 2                 -- ^ topOutputSelect
-  -> BitVector 2                 -- ^ topAddSubLowerInput
-  -> Bit                         -- ^ topAddSubUpperInput
-  -> BitVector 2                 -- ^ topAddSubCarrySelect
-  -> BitVector 2                 -- ^ botOutputSelect
-  -> BitVector 2                 -- ^ botAddSubLowerInput
-  -> Bit                         -- ^ botAddSubUpperInput
-  -> BitVector 2                 -- ^ botAddSubCarrySelect
-  -> Bit                         -- ^ mode8x8
-  -> Bit                         -- ^ aSigned
-  -> Bit                         -- ^ bSigned
-  -> Clock dom                   -- ^ clk
-  -> Signal dom Bit              -- ^ ce
-  -> Signal dom (BitVector 16)   -- ^ c
-  -> Signal dom (BitVector 16)   -- ^ a
-  -> Signal dom (BitVector 16)   -- ^ b
-  -> Signal dom (BitVector 16)   -- ^ d
-  -> Signal dom Bit              -- ^ irsttop
-  -> Signal dom Bit              -- ^ irstbot
-  -> Signal dom Bit              -- ^ orsttop
-  -> Signal dom Bit              -- ^ orstbot
-  -> Signal dom Bit              -- ^ ahold
-  -> Signal dom Bit              -- ^ bhold
-  -> Signal dom Bit              -- ^ chold
-  -> Signal dom Bit              -- ^ dhold
-  -> Signal dom Bit              -- ^ oholdtop
-  -> Signal dom Bit              -- ^ oholdbot
-  -> Signal dom Bit              -- ^ addsubtop
-  -> Signal dom Bit              -- ^ addsubbot
-  -> Signal dom Bit              -- ^ oloadtop
-  -> Signal dom Bit              -- ^ oloadbot
-  -> Signal dom Bit              -- ^ accumci
-  -> Signal dom Bit              -- ^ signextin
-  -> Signal dom Bit              -- ^ ci
-  -> ( Signal dom (BitVector 32) -- o[31:0]
-     , Signal dom Bit            -- co
-     , Signal dom Bit            -- accumco
-     , Signal dom Bit            -- signextout
-     )                           -- ^ (o[31:0], co, accumco, signextout)
-macPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (0, 0, 0, 0)
+-- | default MAC parameters
+defaultParameter :: Parameter
+defaultParameter = Parameter
+  { negTrigger = 0
+  , aReg = 0
+  , bReg = 0
+  , cReg = 0
+  , dReg = 0
+  , top8x8MultReg = 0
+  , bot8x8MultReg = 0
+  , pipeline16x16MultReg1 = 0
+  , pipeline16x16MultReg2 = 0
+  , topOutputSelect = 0
+  , topAddSubLowerInput = 0
+  , topAddSubUpperInput = 0
+  , topAddSubCarrySelect = 0
+  , botOutputSelect = 0
+  , botAddSubLowerInput = 0
+  , botAddSubUpperInput = 0
+  , botAddSubCarrySelect = 0
+  , mode8x8 = 0
+  , aSigned = 0
+  , bSigned = 0
+  }
+
+-- | MAC primitive wrapper
+mac
+  :: HiddenClock dom
+  => Parameter
+  -> Input dom
+  -> ( Signal dom (BitVector 32)
+     , Signal dom Bit
+     , Signal dom Bit
+     , Signal dom Bit
+     )
+mac Parameter{..} Input{..}
+  = macPrim negTrigger
+            aReg
+            bReg
+            cReg
+            dReg
+            top8x8MultReg
+            bot8x8MultReg
+            pipeline16x16MultReg1
+            pipeline16x16MultReg2
+            topOutputSelect
+            topAddSubLowerInput
+            topAddSubUpperInput
+            topAddSubCarrySelect
+            botOutputSelect
+            botAddSubLowerInput
+            botAddSubUpperInput
+            botAddSubCarrySelect
+            mode8x8
+            aSigned
+            bSigned
+            hasClock
+            ce
+            c
+            a
+            b
+            d
+            irsttop
+            irstbot
+            orsttop
+            orstbot
+            ahold
+            bhold
+            chold
+            dhold
+            oholdtop
+            oholdbot
+            addsubtop
+            addsubbot
+            oloadtop
+            oloadbot
+            accumci
+            signextin
+            ci
+
