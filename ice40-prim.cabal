@@ -24,6 +24,7 @@ library
                          Ice40.Led,
                          Ice40.Mac,
                          Ice40.Osc,
+                         Ice40.Pll.Core,
                          Ice40.Pll.Pad,
                          Ice40.Rgb,
                          Ice40.Spi,

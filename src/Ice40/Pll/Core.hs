@@ -6,89 +6,95 @@ License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 PLL Core hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf)
 -}
-module Ice40.Pll ( pll ) where
+module Ice40.Pll.Core where
 
 import Clash.Prelude
 import Clash.Annotations.Primitive
 import Data.String.Interpolate (i)
 import Data.String.Interpolate.Util (unindent)
 
-{-# ANN pllPrim (InlinePrimitive [Verilog] $ unindent [i|
+{-# ANN pllCorePrim (InlinePrimitive [Verilog] $ unindent [i|
   [  { "BlackBox" :
-       { "name" : "Ice40.Pll.Core.pllPrim"
+       { "name" : "Ice40.Pll.Core.pllCorePrim"
        , "kind" : "Declaration"
        , "type" :
-  "pllPrim
-    :: String          -- ARG[0]  feedbackpath
-    -> String          -- ARG[1]  delayAdjustmentModeFeedback
-    -> BitVector 4     -- ARG[2]  fdaFeedback
-    -> String          -- ARG[3]  delayAdjustmentModeRelative
-    -> BitVector 4     -- ARG[4]  fdaRelative
-    -> Clock dom       -- ARG[1]  referenceClk
-    -> Signal dom Bool -- ARG[2]  sbrwi
-    -> Signal dom Bool -- ARG[3]  sbstbi
-    -> Signal dom Bit  -- ARG[4]  sbadri7
-    -> Signal dom Bit  -- ARG[5]  sbadri6
-    -> Signal dom Bit  -- ARG[6]  sbadri5
-    -> Signal dom Bit  -- ARG[7]  sbadri4
-    -> Signal dom Bit  -- ARG[8]  sbadri3
-    -> Signal dom Bit  -- ARG[9]  sbadri2
-    -> Signal dom Bit  -- ARG[10] sbadri1
-    -> Signal dom Bit  -- ARG[11] sbadri0
-    -> Signal dom Bit  -- ARG[12] sbdati7
-    -> Unbundled dom 
-         ( BitVector 8 -- sbdato
-         , Bool        -- sbacko
-         , Bit         -- spiirq
-         , Bit         -- spiwkup
-         , Bit         -- wo
-         , Bit         -- woe
-         , Bit         -- bo
-         , Bit         -- boe
-         , Bit         -- wcko
-         , Bit         -- wckoe
-         , BitVector 4 -- bcsno
-         , BitVector 4 -- bcsnoe
-         )"
-        , "template" :
+  "pllCorePrim
+  :: KnownDomain dom'         -- ARG[0]
+  => BitVector 7              -- ARG[1]  divf
+  -> BitVector 3              -- ARG[2]  divq
+  -> BitVector 4              -- ARG[3]  divr
+  -> String                   -- ARG[4]  feedbackPath
+  -> BitVector 3              -- ARG[5]  filterRange
+  -> String                   -- ARG[6]  pllOutSelect
+  -> String                   -- ARG[7]  delayAdjustmentModeFeedback
+  -> String                   -- ARG[8]  delayAdjustmentModeRelative
+  -> BitVector 4              -- ARG[9]  fdaFeedback
+  -> BitVector 4              -- ARG[10] fdaRelative
+  -> Bit                      -- ARG[11] enableIceGate
+  -> Clock dom                -- ARG[12] referenceClk
+  -> Signal dom (BitVector 8) -- ARG[13] dynamicDelay
+  -> Signal dom Bit           -- ARG[14] resetb
+  -> Signal dom Bit           -- ARG[15] bypass
+  -> ( Clock dom'             -- pllOutCore
+     , Clock dom'             -- globalOutCore
+     , Signal dom' Bool       -- lock
+     )"
+      , "template" :
   "//SB_PLL40_CORE begin
-  wire ~GENSYM[lock][0];
-  wire ~GENSYM[plloutglobal][1];
-  wire ~GENSYM[plloutcore][2];
-
+  wire ~GENSYM[pllOutCore][0];
+  wire ~GENSYM[globalOutCore][1];
+  wire ~GENSYM[lock][2];
+  
   SB_PLL40_CORE #(
-    .FEEDBACK_PATH                  ( ~ARG[0] ),
-    .DELAY_ADJUSTMENT_MODE_FEEDBACK ( ~ARG[1] ),
-    .FDA_FEEDBACK                   ( ~ARG[2] ),
-    .DELAY_ADJUSTMENT_MODE_RELATIVE ( ~ARG[3] ),
-    .FDA_RELATIVE                   ( ~ARG[4] ),
-    .SHIFTREG_DIV_MODE              ( ~ARG[5] ),
-    .PLLOUT_SELECT                  ( ~ARG[6] ),
-    .DIVR                           ( ~ARG[7] ),
-    .DIVF                           ( ~ARG[8] ),
-    .DIVQ                           ( ~ARG[9] )
-  ) ~GENSYM[sb_spi_inst][3] (
-    .REFERENCECLK    ( ~ARG[8]  ),
-    .RESETB          ( ~ARG[9]  ),
-    .BYPASS          ( ~ARG[10] ),
-    .EXTFEEDBACK     ( ~ARG[11] ),
-    .DYNAMICDELAY    ( ~ARG[12] ),
-    .LATCHINPUTVALUE ( ~ARG[13] ),
-    .SCLK            ( ~ARG[14] ),
-    .SDI             ( ~ARG[15] ),
-    .SDO             ( ~ARG[16] ),
-
-    .LOCK         ( ~SYM[0]  ),
-    .PLLOUTGLOBAL ( ~SYM[1]  ),
-    .PLLOUTCORE   ( ~SYM[2]  )
+    .DIVF                           ( ~ARG[1]  ),
+    .DIVQ                           ( ~ARG[2]  ),
+    .DIVR                           ( ~ARG[3]  ),
+    .FEEDBACK_PATH                  ( ~ARG[4]  ),
+    .FILTER_RANGE                   ( ~ARG[5]  ),
+    .PLLOUT_SELECT                  ( ~ARG[6]  ),
+    .DELAY_ADJUSTMENT_MODE_FEEDBACK ( ~ARG[7]  ),
+    .DELAY_ADJUSTMENT_MODE_RELATIVE ( ~ARG[8]  ),
+    .FDA_FEEDBACK                   ( ~ARG[9]  ),
+    .FDA_RELATIVE                   ( ~ARG[10] ),
+    .ENABLE_ICEGATE                 ( ~ARG[11] )
+  ) ~GENSYM[sb_pll40_core_inst][3] (
+    .REFERENCECLK                   ( ~ARG[12] ),
+    .DYNAMICDELAY                   ( ~ARG[13] ),
+    .RESETB                         ( ~ARG[14] ),
+    .BYPASS                         ( ~ARG[15] ),
+  
+    .PLLOUTCORE                     ( ~SYM[0]  ),
+    .PLLOUTGLOBAL                   ( ~SYM[1]  ),
+    .LOCK                           ( ~SYM[2]  )
   );
 
-  assign ~RESULT = { ~SYM[0]  // lock
-                   , ~SYM[1]  // plloutglobal
-                   , ~SYM[2]  // plloutcore
-                   };
+  assign ~RESULT = { ~SYM[0], ~SYM[1], ~SYM[2] };
   // SB_PLL40_CORE end"
-       }
-     }
+      }
+    }
   ]
   |]) #-}
+
+{-# NOINLINE pllCorePrim #-}
+pllCorePrim 
+  :: KnownDomain dom'            -- ARG[0]
+  => BitVector 7                 -- ^ divf
+  -> BitVector 3                 -- ^ divq
+  -> BitVector 4                 -- ^ divr
+  -> String                      -- ^ feedbackPath
+  -> BitVector 3                 -- ^ filterRange
+  -> String                      -- ^ pllOutSelect
+  -> String                      -- ^ delayAdjustmentModeFeedback
+  -> String                      -- ^ delayAdjustmentModeRelative
+  -> BitVector 4                 -- ^ fdaFeedback
+  -> BitVector 4                 -- ^ fdaRelative
+  -> Bit                         -- ^ enableIceGate
+  -> Clock dom                   -- ^ referenceClk
+  -> Signal dom (BitVector 8)    -- ^ dynamicDelay
+  -> Signal dom Bit              -- ^ resetb
+  -> Signal dom Bit              -- ^ bypass
+  -> ( Clock dom'                -- pllOutCore
+     , Clock dom'                -- globalOutCore
+     , Signal dom' Bool          -- lock
+     ) -- ^ (pllOutCore, globalOutCore, lock)
+pllCorePrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (clockGen, clockGen, pure True)
