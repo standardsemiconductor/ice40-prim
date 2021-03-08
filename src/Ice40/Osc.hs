@@ -75,7 +75,7 @@ lf10kHz !_ !_ = Clock SSymbol
   -> Clock dom'                 -- clkhf"
        , "template" :
   "//SB_HFOSC begin
-  SB_HFOSC #( .CLKHF_DIV(~ARG[2]) ) sb_hfosc_inst (
+  SB_HFOSC #( .CLKHF_DIV(~ARG[2]) ) ~GENSYM[sb_hfosc_inst][0] (
     .CLKHFEN (~ARG[3]),
     .CLKHFPU (~ARG[4]),
     .CLKHF   (~RESULT)
