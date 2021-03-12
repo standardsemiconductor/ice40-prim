@@ -19,7 +19,7 @@ Lattice iCE40 Primitive IP
   * 32-bit, or two independent 16-bit adder/subtractor functions, registered or asynchronous
   * Cascadable to create wider accumulator blocks
 
-* [Ice40.Osc](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Osc.hs)
+* [Ice40.Osc](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Osc.hs) - For more information see the [
   * on-chip oscillator
   * Low-power low frequency oscillator of 10 kHz
   * High frequency oscillator configurable to 48 Mhz, 24 Mhz, 12 Mhz, or 6 Mhz
@@ -82,6 +82,8 @@ Lattice iCE40 Primitive IP
 [iCE40 SPRAM Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/FPGA-TN-02022-1-2-iCE40-SPRAM-Usage-Guide.pdf)
 
 [DSP Function Usage Guide PDF](https://github.com/standardsemiconductor/VELDT-info/blob/master/DSPFunctionUsageGuideforICE40Devices.pdf)
+
+[iCE40 sysCLOCK PLL Design and Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/iCE40sysCLOCKPLLDesignandUsageGuide.pdf)
 
 [hackage]:            <https://hackage.haskell.org/package/ice40-prim>
 [hackage-badge]:      <https://img.shields.io/hackage/v/ice40-prim.svg?color=success>

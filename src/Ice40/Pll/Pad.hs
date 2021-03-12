@@ -5,7 +5,7 @@ Copyright   : (c) David Cox, 2021
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
-PLL Pad hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf).
+PLL Pad hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf). The PLL pad primitive should be used when the source  clock of the PLL is driven by an input pad that is located in the bottom IO bank (IO Bank 2) or the top IO bank (IO Bank 0), and the source clock is not required inside the FPGA.
 -}
 
 module Ice40.Pll.Pad where
