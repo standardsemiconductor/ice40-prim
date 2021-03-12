@@ -1,5 +1,10 @@
 # Revision history for ice40-prim
 
+## 0.3.0.0 -- 2021-03-12
+
+* Add PLL IP, pad and core
+* Generate ice40 High Frequency Oscillator primitive instance
+
 ## 0.2.0.0 -- 2021-03-3
 
 * Add MAC wrapper as Ice40.Mac, move MAC primitive to Ice40.Mac.Prim

@@ -25,6 +25,14 @@ Lattice iCE40 Primitive IP
   * High frequency oscillator configurable to 48 Mhz, 24 Mhz, 12 Mhz, or 6 Mhz
   * See also [Ice40.Clock](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Clock.hs) for clock domains and reset
 
+* [Ice40.Pll](https://github.com/standardsemiconductor/ice40-prim/tree/main/src/Ice40/Pll) - For more information see the [iCE40 sysCLOCK PLL Design and Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/iCE40sysCLOCKPLLDesignandUsageGuide.pdf)
+  * [Pad](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Pll/Pad.hs) and [Core](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Pll/Core.hs) variants
+  * Phase Lock Loop (PLL)
+  * Provides a variety of user-synthesizable clock frequencies along with custom phase delays
+  * Generates a new output clock freuquency via clock multiplication and division
+  * De-skews or phase-aligns an output clock to the input reference clock
+  * Corrects output clock to have nearly a 50% duty cycle, which is important for Double Data Rate (DDR) applications
+
 * [Ice40.Rgb](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Rgb.hs) - For more information see the [iCE40 LED Driver Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/ICE40LEDDriverUsageGuide.pdf)
   * RGB High Current Drive I/O Pins
   * Provides sinking current to an LED connecting to the positive supply
