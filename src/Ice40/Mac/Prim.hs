@@ -5,7 +5,7 @@ Copyright   : (c) David Cox, 2021
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
-MAC hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf)
+MAC hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf). See [DSP Function Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/DSPFunctionUsageGuideforICE40Devices.pdf) for more information.
 -}
 module Ice40.Mac.Prim ( macPrim ) where
 

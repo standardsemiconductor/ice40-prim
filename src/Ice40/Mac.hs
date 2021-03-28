@@ -1,11 +1,11 @@
 {-|
-Module : Ice40.Mac
+Module      : Ice40.Mac
 Description : Ice40 Multiply-Accumulate primitive wrapper
-Copyright : (c) David Cox, 2021
-License : BSD-3-Clause
-Maintainer : standardsemiconductor@gmail.com
+Copyright   : (c) David Cox, 2021
+License     : BSD-3-Clause
+Maintainer  : standardsemiconductor@gmail.com
 
-MAC primitive wrapper. See "Ice40.Mac.Prim" for the original primitive.
+MAC primitive wrapper. See "Ice40.Mac.Prim" for the original primitive. For more information see [LATTICE ICE Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf) and [DSP Function Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/DSPFunctionUsageGuideforICE40Devices.pdf).
 -}
 module Ice40.Mac 
   ( mac
