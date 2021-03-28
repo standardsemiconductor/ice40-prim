@@ -19,6 +19,7 @@ source-repository head
                      
 library
         exposed-modules: Ice40.Clock,
+                         Ice40.GB,
                          Ice40.I2c,
                          Ice40.IO
                          Ice40.Led,
