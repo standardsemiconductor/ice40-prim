@@ -19,7 +19,7 @@ Lattice iCE40 Primitive IP
   * 32-bit, or two independent 16-bit adder/subtractor functions, registered or asynchronous
   * Cascadable to create wider accumulator blocks
 
-* [Ice40.Osc](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Osc.hs) - For more information see the [
+* [Ice40.Osc](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/Osc.hs) - For more information see the [iCE40 Oscillator Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/FPGA-TN-02008-1-7-iCE40-Oscillator-Usage-Guide.pdf)
   * on-chip oscillator
   * Low-power low frequency oscillator of 10 kHz
   * High frequency oscillator configurable to 48 Mhz, 24 Mhz, 12 Mhz, or 6 Mhz
