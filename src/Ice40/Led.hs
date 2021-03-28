@@ -5,7 +5,7 @@ Copyright   : (c) David Cox, 2021
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
-LED hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf)
+LED hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf). See [iCE40 LED Driver Usage Guide](https://github.com/standardsemiconductor/VELDT-info/blob/master/ICE40LEDDriverUsageGuide.pdf) for more information.
 -}
 module Ice40.Led ( led ) where
 
@@ -104,7 +104,7 @@ ledPrim
                    )
 ledPrim !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ !_ = (pure 0, pure 0, pure 0, pure False)
 
--- | SB_LEDDA_IP primitive generates the RGB PWM outputs for the RGB LED drivers. The IP contains registers that are programmed in byte the SCI bus interface signals.
+-- | SB_LEDDA_IP primitive generates the RGB PWM outputs for the RGB LED drivers. 
 -- 
 -- LED Control Bus Addressable Registers
 --
