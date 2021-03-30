@@ -56,7 +56,7 @@ Lattice iCE40 Primitive IP
   * LSB First or MSB First data transfer
 
 * [Ice40.IO](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/IO.hs)
-  * sysIO
+  * IO primitive
 
 * [Ice40.GB](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/GB.hs)
   * Global buffer primitive
