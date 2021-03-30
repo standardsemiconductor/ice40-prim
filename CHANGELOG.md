@@ -1,5 +1,9 @@
 # Revision history for ice40-prim
 
+## 0.3.1.0 -- 2021-03-30
+* Add Global Buffer IP, Ice40.GB
+* Update documentation
+
 ## 0.3.0.1 -- 2021-03-28
 
 * Minor documentation updates
