@@ -95,6 +95,7 @@ data PinInput = PinInput -- ^ Simple Input pin dIn0
   deriving stock (Generic, Show, Read, Eq)
   deriving anyclass NFDataX
 
+-- | Convert `PinInput` to underlying `BitVector`
 fromPinInput :: PinInput -> BitVector 2
 fromPinInput = \case
   PinInput                -> 0b01
@@ -120,6 +121,7 @@ data PinOutput = PinNoOutput -- ^Disables the output function
   deriving stock (Generic, Show, Read, Eq)
   deriving anyclass NFDataX
 
+-- | Convert `PinOutput` to underlying `BitVector`
 fromPinOutput :: PinOutput -> BitVector 4
 fromPinOutput = \case
   PinNoOutput                                 -> 0b0000
@@ -141,6 +143,7 @@ data IOStandard = SBLVCMOS
                 | SBLVDSINPUT
   deriving (Generic, Show, Read, Eq)
 
+-- | Convert `IOStandard` to underlying `String`
 fromIOStandard :: IOStandard -> String
 fromIOStandard = \case
   SBLVCMOS    -> "SB_LVCMOS"

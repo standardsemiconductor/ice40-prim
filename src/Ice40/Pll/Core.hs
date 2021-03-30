@@ -75,6 +75,7 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+-- | PLL Core primitive
 {-# NOINLINE pllCorePrim #-}
 pllCorePrim 
   :: KnownDomain dom'            -- ARG[0]

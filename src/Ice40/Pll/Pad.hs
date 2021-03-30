@@ -76,6 +76,7 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+-- | PLL Pad primitive
 {-# NOINLINE pllPadPrim #-}
 pllPadPrim 
   :: KnownDomain dom'         -- ARG[0]
