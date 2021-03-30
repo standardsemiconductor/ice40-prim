@@ -58,6 +58,10 @@ Lattice iCE40 Primitive IP
 * [Ice40.IO](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/IO.hs)
   * sysIO
 
+* [Ice40.GB](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/GB.hs)
+  * Global buffer primitive
+  * Required for a user's internally generated FPGA signal that is heavily loaded and requires global buffering; for example, a user's logic-generated clock
+
 * [Ice40.I2c](https://github.com/standardsemiconductor/ice40-prim/blob/main/src/Ice40/I2c.hs) - For more information see the [Advanced SPI and I2C Usage Guide PDF](https://github.com/standardsemiconductor/VELDT-info/blob/master/AdvancediCE40SPII2CHardenedIPUsageGuide.pdf)
   * User I2C IP
   * Boss and Worker operation

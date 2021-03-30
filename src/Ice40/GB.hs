@@ -5,7 +5,8 @@ Copyright   : (c) David Cox, 2021
 License     : BSD-3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
-Global buffer IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf). 
+Global buffer IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf).
+Required for a user's internally generated FPGA signal that is heavily loaded and requires global buffering; for example, a user's logic-generated clock.
 -}
 module Ice40.GB where
 
