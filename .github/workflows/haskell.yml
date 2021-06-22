@@ -21,6 +21,9 @@ jobs:
                 # cabal 3.0 does not support GHC 9.0
                 - ghc: '9.0'
                   cabal: '3.0'
+                # cabal 3.2 does not support GHC 9.0
+                - ghc: '9.0'
+                  cabal: '3.2'
                         
     name: ${{ matrix.os }} GHC ${{ matrix.ghc }} Cabal ${{ matrix.cabal }}
     steps:
