@@ -228,4 +228,4 @@ i2c initAddr busAddr sbrwi sbstbi sbadri sbdati scli sdai =
           sdai
 
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
-bitAt n = fmap (!n)
+bitAt n = fmap (! n)

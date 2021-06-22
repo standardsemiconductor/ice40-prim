@@ -88,10 +88,10 @@ spramPrim clock address dataIn maskWrEn wrEn chipSelect !_ !_ !_
       Nyb1 -> slice d7  d4
       Nyb0 -> slice d3  d0
     nybMask = \case
-      Nyb3 -> (!(3 :: Index 4))
-      Nyb2 -> (!(2 :: Index 4))
-      Nyb1 -> (!(1 :: Index 4))
-      Nyb0 -> (!(0 :: Index 4))
+      Nyb3 -> (! (3 :: Index 4))
+      Nyb2 -> (! (2 :: Index 4))
+      Nyb1 -> (! (1 :: Index 4))
+      Nyb0 -> (! (0 :: Index 4))
     writeGuard n dIn addr en mask
       | bitToBool en && (not.bitToBool) (nybMask n mask) = Just (addr, nybSlice n dIn)
       | otherwise = Nothing

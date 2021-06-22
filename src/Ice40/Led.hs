@@ -162,4 +162,4 @@ led cs dat addr en exe = (pwmOut0, pwmOut1, pwmOut2, on)
 
  
 bitAt :: KnownNat n => Index n -> Signal dom (BitVector n) -> Signal dom Bit
-bitAt n = fmap (!n)
+bitAt n = fmap (! n)

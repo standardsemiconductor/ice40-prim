@@ -45,7 +45,7 @@ library
           -fplugin GHC.TypeLits.Extra.Solver
           -fplugin GHC.TypeLits.Normalise
           -fplugin GHC.TypeLits.KnownNat.Solver
-
+          -fexpose-all-unfoldings
           -fno-worker-wrapper
         default-language: Haskell2010
         default-extensions:
