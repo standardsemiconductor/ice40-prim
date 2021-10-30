@@ -32,7 +32,7 @@ library
                          Ice40.Spi,
                          Ice40.Spram
         hs-source-dirs: src
-        build-depends: base          >= 4.12  && < 4.16,
+        build-depends: base          >= 4.12  && < 4.17,
                        interpolate   >= 0.2   && < 0.3,
                        clash-prelude >= 1.2.5 && < 1.5,
                        ghc-typelits-natnormalise,
