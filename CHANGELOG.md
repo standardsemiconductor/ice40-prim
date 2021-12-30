@@ -1,5 +1,8 @@
 # Revision history for ice40-prim
 
+## 0.3.1.2 -- 2021-12-30
+* Update dependency bounds
+
 ## 0.3.1.1 -- 2021-07-1
 
 * Fix bit index operator spacing for GHC 9.0
