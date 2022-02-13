@@ -34,7 +34,7 @@ library
         hs-source-dirs: src
         build-depends: base          >= 4.12  && < 4.17,
                        interpolate   >= 0.2   && < 0.3,
-                       clash-prelude >= 1.2.5 && < 1.6,
+                       clash-prelude >= 1.2.5 && < 1.7,
                        ghc-typelits-natnormalise,
                        ghc-typelits-extra,
                        ghc-typelits-knownnat
