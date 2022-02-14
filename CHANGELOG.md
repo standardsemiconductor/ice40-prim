@@ -1,5 +1,9 @@
 # Revision history for ice40-prim
 
+## 0.3.1.3 -- 2022-02-13
+* Update dependency bounds: clash-prelude-1.6.1
+  * clash-prelude >= 1.2.5 && < 1.7
+
 ## 0.3.1.2 -- 2021-12-30
 * Update dependency bounds
 
