@@ -1,6 +1,6 @@
 cabal-version:       >=1.10
 name:                ice40-prim
-version:             0.3.1.2
+version:             0.3.1.3
 synopsis:            Lattice iCE40 Primitive IP
 description:         Clash primitives to instantiate Lattice Semiconductor's iCE40 FPGA hard IP
 bug-reports:         https://github.com/standardsemiconductor/ice40-prim/issues
@@ -34,7 +34,7 @@ library
         hs-source-dirs: src
         build-depends: base          >= 4.12  && < 4.17,
                        interpolate   >= 0.2   && < 0.3,
-                       clash-prelude >= 1.2.5 && < 1.6,
+                       clash-prelude >= 1.2.5 && < 1.7,
                        ghc-typelits-natnormalise,
                        ghc-typelits-extra,
                        ghc-typelits-knownnat
