@@ -1,7 +1,7 @@
 {-|
 Module      : Ice40.Clock
 Description : Ice40 Clock domains
-Copyright   : (c) David Cox, 2021
+Copyright   : (c) David Cox, 2021-2022
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 

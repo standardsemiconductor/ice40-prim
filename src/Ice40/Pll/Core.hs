@@ -1,7 +1,7 @@
 {-|
 Module      : Ice40.Pll.Core
 Description : Ice40 PLL hard IP primitive
-Copyright   : (c) David Cox, 2021
+Copyright   : (c) David Cox, 2021-2022
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 PLL Core hard IP primitive from [Lattice Ice Technology Library](https://github.com/standardsemiconductor/VELDT-info/blob/master/SBTICETechnologyLibrary201708.pdf). The PLL core primitive should be used when the source clock of the PLL is driven by FPGA routing i.e. when the PLL source clock originates on the FPGA or is driven by an input pad the is not in the bottom IO bank (IO Bank 2).

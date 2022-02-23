@@ -1,7 +1,7 @@
 {-|
 Module      : Ice40.Led
 Description : LED Ice40 hard IP primitive
-Copyright   : (c) David Cox, 2021
+Copyright   : (c) David Cox, 2021-2022
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
