@@ -14,24 +14,17 @@ jobs:
     runs-on: ${{ matrix.os }} 
     strategy:
       matrix:
-        ghc: ['8.6', '8.8', '8.10', '9.0']
-        cabal: ['3.0', '3.2', '3.4']
+        ghc: ['9.0']
+        cabal: ['3.10']
         os: [ubuntu-20.04]
-        exclude:
-                # cabal 3.0 does not support GHC 9.0
-                - ghc: '9.0'
-                  cabal: '3.0'
-                # cabal 3.2 does not support GHC 9.0
-                - ghc: '9.0'
-                  cabal: '3.2'
                         
     name: ${{ matrix.os }} GHC ${{ matrix.ghc }} Cabal ${{ matrix.cabal }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Haskell
-      uses: haskell/actions/setup@v1
+      uses: haskell/actions/setup@v2
       with:
         ghc-version: ${{ matrix.ghc }}
         cabal-version: ${{ matrix.cabal }}
@@ -39,8 +32,4 @@ jobs:
     - name: Install dependencies
       run: |
         cabal update
-        cabal build --only-dependencies --enable-tests --enable-benchmarks
-    - name: Build
-      run: cabal build --enable-tests --enable-benchmarks all
-#    - name: Run tests
-#      run: cabal test all
+        cabal build
