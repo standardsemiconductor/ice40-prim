@@ -1,5 +1,5 @@
 # ice40-prim
-![Haskell CI](https://github.com/standardsemiconductor/ice40-prim/workflows/Haskell%20CI/badge.svg)
+![Haskell CI](https://github.com/standardsemiconductor/ice40-prim/actions/workflows/Haskell%20CI/badge.svg)
 [![Hackage][hackage-badge]][hackage]
 [![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 
