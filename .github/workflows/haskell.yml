@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }} 
     strategy:
       matrix:
-        ghc: ['9.0']
+        ghc: ['9.6']
         cabal: ['3.10']
         os: [ubuntu-20.04]
                         
@@ -39,7 +39,7 @@ jobs:
       uses: actions/cache/restore@v3
       id: cache
       env:
-        key: ${{ runner.os }}-ghc-${{ steps.setup.outputs.ghc }}-cabal-${{ steps.setup.outputs.cabal }}
+        key: ${{ runner.os }}-ghc-${{ steps.setup.outputs.ghc-version }}-cabal-${{ steps.setup.outputs.cabal-version }}
       with:
         path: ${{ steps.setup.outputs.cabal-store }}
         key: ${{ env.key }}-plan-${{ hashFiles('**/plan.json') }}

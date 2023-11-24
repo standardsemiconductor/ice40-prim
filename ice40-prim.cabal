@@ -32,21 +32,22 @@ library
                          Ice40.Spi,
                          Ice40.Spram
         hs-source-dirs: src
-        build-depends: base          >= 4.12  && < 4.17,
+        build-depends: base          >= 4.12  && < 4.20,
                        interpolate   >= 0.2   && < 0.3,
-                       clash-prelude >= 1.2.5 && < 1.7,
+                       clash-prelude >= 1.2.5 && < 1.9,
                        ghc-typelits-natnormalise,
                        ghc-typelits-extra,
                        ghc-typelits-knownnat
         ghc-options:
           -Wall -Wcompat
           -haddock
-
           -fplugin GHC.TypeLits.Extra.Solver
           -fplugin GHC.TypeLits.Normalise
           -fplugin GHC.TypeLits.KnownNat.Solver
           -fexpose-all-unfoldings
           -fno-worker-wrapper
+          -fno-unbox-small-strict-fields
+          -fno-unbox-strict-fields
         default-language: Haskell2010
         default-extensions:
           BangPatterns
