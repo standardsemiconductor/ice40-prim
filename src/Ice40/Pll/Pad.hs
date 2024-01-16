@@ -1,7 +1,7 @@
 {-|
 Module      : Ice40.Pll.Pad
 Description : Ice40 PLL Pad hard IP primitive
-Copyright   : (c) David Cox, 2021-2022
+Copyright   : (c) David Cox, 2021-2024
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 

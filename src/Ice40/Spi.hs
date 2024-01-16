@@ -1,7 +1,7 @@
 {-|
 Module      : Ice40.Spi
 Description : Ice40 SPI hard IP primitive
-Copyright   : (c) David Cox, 2021-2022
+Copyright   : (c) David Cox, 2021-2024
 License     : BSD 3-Clause
 Maintainer  : standardsemiconductor@gmail.com
 
