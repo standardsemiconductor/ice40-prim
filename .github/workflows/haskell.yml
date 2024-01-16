@@ -14,11 +14,10 @@ jobs:
     runs-on: ${{ matrix.os }} 
     strategy:
       matrix:
-        ghc: ['9.6']
-        cabal: ['3.10']
+        ghc: ['9.0', '9.4', '9.6']
         os: [ubuntu-20.04]
                         
-    name: ${{ matrix.os }} GHC ${{ matrix.ghc }} Cabal ${{ matrix.cabal }}
+    name: ${{ matrix.os }} GHC ${{ matrix.ghc }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -28,7 +27,6 @@ jobs:
       id: setup
       with:
         ghc-version: ${{ matrix.ghc }}
-        cabal-version: ${{ matrix.cabal }}
 
     - name: Configure
       run: |
