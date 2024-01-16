@@ -54,7 +54,7 @@ lf10kHz
   :: Signal dom Bool -- ^ CLKLFPU - Power up the LFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
   -> Signal dom Bool -- ^ CLKLFEN - Enable the clock output. Enable should be low for the 100us power up period. Active High.
   -> Clock Lattice10kHz -- ^ LF Oscillator output
-lf10kHz !_ !_ = Clock SSymbol
+lf10kHz !_ !_ = Clock SSymbol Nothing
 
 -------------------------------
 -- High Frequency Oscillator --
@@ -94,7 +94,7 @@ hfPrim
   -> Signal dom Bool            -- ARG[3]  clkhfen
   -> Signal dom Bool            -- ARG[4]  clkhfpu
   -> Clock dom'                 -- clkhf"
-hfPrim !_ !_ !_ = Clock SSymbol
+hfPrim !_ !_ !_ = Clock SSymbol Nothing
 
 -- | High frequency oscillator 48 Mhz
 hf48Mhz

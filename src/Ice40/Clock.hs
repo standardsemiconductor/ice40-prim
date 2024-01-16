@@ -33,4 +33,4 @@ createDomain vXilinxSystem{vName="Lattice6Mhz",  vPeriod=166660}
 
 -- | Lattice reset signal, always inactive
 latticeRst :: KnownDomain dom => Reset dom
-latticeRst = unsafeFromHighPolarity $ pure False
+latticeRst = unsafeFromActiveHigh $ pure False
