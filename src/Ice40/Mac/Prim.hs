@@ -134,7 +134,7 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | Multiply-Accumulate primitive
-{-# NOINLINE macPrim #-}
+{-# OPAQUE macPrim #-}
 macPrim
   :: Bit                         -- ^ negTrigger
   -> Bit                         -- ^ aReg

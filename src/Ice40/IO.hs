@@ -67,7 +67,7 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | IO primitive, see io for wrapper
-{-# NOINLINE ioPrim #-}
+{-# OPAQUE ioPrim #-}
 ioPrim
   :: BitVector 6         -- ^ pinType
   -> Bit                 -- ^ pullup
