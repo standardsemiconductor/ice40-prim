@@ -20,7 +20,7 @@ jobs:
     name: ${{ matrix.os }} GHC ${{ matrix.ghc }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Setup Haskell
       uses: haskell-actions/setup@v2
