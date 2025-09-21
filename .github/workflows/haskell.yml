@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         ghc: ['9.0', '9.4', '9.6']
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
                         
     name: ${{ matrix.os }} GHC ${{ matrix.ghc }}
     steps:
