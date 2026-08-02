@@ -4,6 +4,10 @@
 * Mark primitives `OPAQUE` rather than `NOINLINE` on GHC >= 9.4. Clash 1.10
   warns that a primitive marked `NOINLINE` "might make Clash ignore this
   primitive". Guarded by CPP, so GHC 9.0 keeps `NOINLINE`.
+* Update dependency bounds: clash-prelude-1.10, GHC 9.10
+  * `clash-prelude >= 1.2.5 && < 1.11`
+  * `base >= 4.12 && < 4.21`
+* Test GHC 9.8 and 9.10 in CI
 
 ## 0.3.1.4 -- 2024-01-15
 * Update dependency bounds: clash-prelude-1.8
