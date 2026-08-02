@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Osc
 Description : Ice40 oscillator hard IP primitives
@@ -49,7 +50,11 @@ import Ice40.Clock
   |]) #-}
 
 -- | Low frequency oscillator 10 kHz
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE lf10kHz #-}
+#else
 {-# NOINLINE lf10kHz #-}
+#endif
 lf10kHz
   :: Signal dom Bool -- ^ CLKLFPU - Power up the LFOSC circuit. After power up, oscillator output will be stable after 100us. Active High.
   -> Signal dom Bool -- ^ CLKLFEN - Enable the clock output. Enable should be low for the 100us power up period. Active High.
@@ -86,7 +91,11 @@ lf10kHz !_ !_ = Clock SSymbol Nothing
   ]
   |]) #-}
 
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE hfPrim #-}
+#else
 {-# NOINLINE hfPrim #-}
+#endif
 hfPrim
   :: KnownDomain dom            -- ARG[0]
   => KnownDomain dom'           -- ARG[1]

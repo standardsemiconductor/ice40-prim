@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Spram
 Description : Ice40 single-port RAM hard IP primitive
@@ -54,7 +55,11 @@ import Data.String.Interpolate.Util (unindent)
 data Nyb = Nyb3 | Nyb2 | Nyb1 | Nyb0
 
 -- | Single port RAM primitive
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE spramPrim #-}
+#else
 {-# NOINLINE spramPrim #-}
+#endif
 spramPrim
   :: KnownDomain dom            -- ARG[0] 
   => Clock dom                  -- ^ clock

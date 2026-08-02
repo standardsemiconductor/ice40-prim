@@ -1,5 +1,10 @@
 # Revision history for ice40-prim
 
+## Unreleased
+* Mark primitives `OPAQUE` rather than `NOINLINE` on GHC >= 9.4. Clash 1.10
+  warns that a primitive marked `NOINLINE` "might make Clash ignore this
+  primitive". Guarded by CPP, so GHC 9.0 keeps `NOINLINE`.
+
 ## 0.3.1.4 -- 2024-01-15
 * Update dependency bounds: clash-prelude-1.8
 
