@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.IO
 Description : Ice40 IO hard IP primitives
@@ -67,7 +68,11 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | IO primitive, see io for wrapper
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE ioPrim #-}
+#else
 {-# NOINLINE ioPrim #-}
+#endif
 ioPrim
   :: BitVector 6         -- ^ pinType
   -> Bit                 -- ^ pullup

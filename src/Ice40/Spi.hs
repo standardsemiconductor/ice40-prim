@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Spi
 Description : Ice40 SPI hard IP primitive
@@ -227,7 +228,11 @@ bitAt n = fmap (! n)
   ]
   |]) #-}
 
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE spiPrim #-}
+#else
 {-# NOINLINE spiPrim #-}
+#endif
 spiPrim
   :: String          -- ARG[0]  busAddr
   -> Clock dom       -- ARG[1]  sbclki

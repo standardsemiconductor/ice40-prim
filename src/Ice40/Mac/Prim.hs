@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Mac.Prim
 Description : Ice40 Multiply-Accumulate (DSP) hard IP primitive
@@ -134,7 +135,11 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | Multiply-Accumulate primitive
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE macPrim #-}
+#else
 {-# NOINLINE macPrim #-}
+#endif
 macPrim
   :: Bit                         -- ^ negTrigger
   -> Bit                         -- ^ aReg

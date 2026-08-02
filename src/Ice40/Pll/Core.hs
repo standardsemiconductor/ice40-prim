@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Pll.Core
 Description : Ice40 PLL hard IP primitive
@@ -76,7 +77,11 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | PLL Core primitive
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE pllCorePrim #-}
+#else
 {-# NOINLINE pllCorePrim #-}
+#endif
 pllCorePrim 
   :: KnownDomain dom'            -- ARG[0]
   => BitVector 7                 -- ^ divf

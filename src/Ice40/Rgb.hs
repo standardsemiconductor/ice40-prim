@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Rgb
 Description : Ice40 RGB hard IP primitive
@@ -88,7 +89,11 @@ import Data.String.Interpolate.Util (unindent)
 --   +-----------------------+-------------------+-------------------+
 --   | "0b111111"            | 24mA              | 12mA              |
 --   +-----------------------+-------------------+-------------------+
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE rgbPrim #-}
+#else
 {-# NOINLINE rgbPrim #-}
+#endif
 rgbPrim
   :: String           -- ^ currentMode - Parameter values: "0b0" = Full Current Mode (Default), "0b1" = Half Current Mode.
   -> String           -- ^ rgb0Current

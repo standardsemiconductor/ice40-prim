@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.GB
 Description : Ice40 Global Buffer IP primtive
@@ -36,6 +37,10 @@ import Data.String.Interpolate.Util (unindent)
   |]) #-}
 
 -- | Global buffer primitive
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE gbPrim #-}
+#else
 {-# NOINLINE gbPrim #-}
+#endif
 gbPrim :: Clock dom -> Clock dom
 gbPrim !clk = clk

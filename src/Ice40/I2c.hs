@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.I2c
 Description : Ice40 I2C hard IP primitive
@@ -135,7 +136,11 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE i2cPrim #-}
+#else
 {-# NOINLINE i2cPrim #-}
+#endif
 i2cPrim
   :: String          -- ARG[0]  initAddr
   -> String          -- ARG[1]  busAddr

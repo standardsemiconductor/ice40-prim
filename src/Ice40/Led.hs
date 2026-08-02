@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module      : Ice40.Led
 Description : LED Ice40 hard IP primitive
@@ -79,7 +80,11 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
+#if __GLASGOW_HASKELL__ >= 904
+{-# OPAQUE ledPrim #-}
+#else
 {-# NOINLINE ledPrim #-}
+#endif
 ledPrim
   :: Signal dom Bit       -- ARG[0]  leddcs - CS to write LEDD IP registers
   -> Clock dom            -- ARG[1]  leddclk - Clock to write LEDD IP registers
