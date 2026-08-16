@@ -86,7 +86,7 @@ lf10kHz !_ !_ = Clock SSymbol Nothing
   ]
   |]) #-}
 
-{-# NOINLINE hfPrim #-}
+{-# OPAQUE hfPrim #-}
 hfPrim
   :: KnownDomain dom            -- ARG[0]
   => KnownDomain dom'           -- ARG[1]

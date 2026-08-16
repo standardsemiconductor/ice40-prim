@@ -54,7 +54,7 @@ import Data.String.Interpolate.Util (unindent)
 data Nyb = Nyb3 | Nyb2 | Nyb1 | Nyb0
 
 -- | Single port RAM primitive
-{-# NOINLINE spramPrim #-}
+{-# OPAQUE spramPrim #-}
 spramPrim
   :: KnownDomain dom            -- ARG[0] 
   => Clock dom                  -- ^ clock

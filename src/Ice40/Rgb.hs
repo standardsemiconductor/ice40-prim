@@ -88,7 +88,7 @@ import Data.String.Interpolate.Util (unindent)
 --   +-----------------------+-------------------+-------------------+
 --   | "0b111111"            | 24mA              | 12mA              |
 --   +-----------------------+-------------------+-------------------+
-{-# NOINLINE rgbPrim #-}
+{-# OPAQUE rgbPrim #-}
 rgbPrim
   :: String           -- ^ currentMode - Parameter values: "0b0" = Full Current Mode (Default), "0b1" = Half Current Mode.
   -> String           -- ^ rgb0Current

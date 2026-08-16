@@ -79,7 +79,7 @@ import Data.String.Interpolate.Util (unindent)
   ]
   |]) #-}
 
-{-# NOINLINE ledPrim #-}
+{-# OPAQUE ledPrim #-}
 ledPrim
   :: Signal dom Bit       -- ARG[0]  leddcs - CS to write LEDD IP registers
   -> Clock dom            -- ARG[1]  leddclk - Clock to write LEDD IP registers

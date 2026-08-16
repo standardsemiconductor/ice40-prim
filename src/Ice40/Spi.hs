@@ -227,7 +227,7 @@ bitAt n = fmap (! n)
   ]
   |]) #-}
 
-{-# NOINLINE spiPrim #-}
+{-# OPAQUE spiPrim #-}
 spiPrim
   :: String          -- ARG[0]  busAddr
   -> Clock dom       -- ARG[1]  sbclki
