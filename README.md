@@ -1,7 +1,6 @@
 # ice40-prim
 ![Haskell CI](https://github.com/standardsemiconductor/ice40-prim/actions/workflows/haskell.yml/badge.svg)
 [![Hackage][hackage-badge]][hackage]
-[![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 
 Lattice iCE40 Primitive IP
 ## Supported IP Modules
@@ -91,5 +90,3 @@ Lattice iCE40 Primitive IP
 
 [hackage]:            <https://hackage.haskell.org/package/ice40-prim>
 [hackage-badge]:      <https://img.shields.io/hackage/v/ice40-prim.svg?color=success>
-[hackage-deps-badge]: <https://img.shields.io/hackage-deps/v/ice40-prim.svg>
-[hackage-deps]:       <http://packdeps.haskellers.com/feed?needle=ice40-prim>
